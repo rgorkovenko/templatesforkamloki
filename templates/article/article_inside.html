@@ -1,0 +1,42 @@
+{%  extends "base.html" %}
+
+{% block title %}{{ article.title_seo|default:article.title }}{% endblock %}
+{% block metakey %}{{ article.metakey }}{% endblock %}
+{% block metades %}{{ article.metades }}{% endblock %}
+{% load thumbnail %}
+
+
+{% block breadcrumbs %}
+        <div class="breadcrunbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+            <div class="inn">
+				<div class="brleft" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="/base.html"><span itemprop="name">Главная</span><meta itemprop="position" content="1" /></a></div> > <div class="brleft" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a itemprop="item" href="{% url article_list %}"><span itemprop="name">Статьи</span><meta itemprop="position" content="2" /></a></div> > <span>{{ article.title }}</span>
+            </div>
+        </div>
+{% endblock %} 
+
+{% block content %}	
+        <div class="main">
+            <div class="inn">
+                <div class="mar">
+                    <div class="left">
+                      {% include "left_menu.html" %}
+
+                    </div>
+                    <div class="right">
+                        <div class="content">
+                            <h1>{{ article.title }} </h1>
+                            {% thumbnail article.image "190" crop="center" as im %}
+                                <img align="left" border="0" src="{{ im.url }}" width="190px" class="img_left" />
+                            {% endthumbnail %}    
+                            {{ article.content|safe }}
+                         
+                        </div>
+
+                    </div>
+                </div>
+                <div class="clr"></div>
+            </div>
+        </div>
+	
+{% endblock %}

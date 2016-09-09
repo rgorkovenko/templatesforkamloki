@@ -1,0 +1,44 @@
+{% load thumbnail %}
+
+<h3>Заказ №{{zakaz.id}} от {{zakaz.date}}</h3>
+
+Имя: {{zakaz.name}}<br>
+E-mail: {{zakaz.email}}<br>
+Телефон: {{zakaz.tel}}<br>
+<!--Адрес: {{zakaz.adress}}<br>
+Оплата: {{zakaz.pay}}<br>
+Доставка: {{zakaz.dostavka}}<br-->
+Комментарий: {{zakaz.message}}<br>
+<br>
+
+<table>
+<tr>
+<td>Товар
+</td>
+<td>количество
+</td>
+<td>цена
+</td>               
+<td>стоимость
+</td>
+</tr>
+{%for item,n in products%}
+<tr>
+<td>{{item.tovar.title}}
+<br>
+{% thumbnail item.tovar.image "165x130" crop="center" as im %}
+   <img src="http://im.wi-jet.ru/{{ im.url }}" alt="{{item.tovar.title}}">
+{% endthumbnail %}
+</td>
+<td>{{item.quantity}}шт.
+</td>
+<td>{{item.tovar.price}}руб.
+</td>
+<td>{{n}}руб.
+</td>
+</tr>
+{%endfor%}
+</table>  
+
+
+<p>Итого: {{zakaz.itogo}} руб.</p>

@@ -1,0 +1,80 @@
+{%  extends "base_1.html" %}
+{% load thumbnail %}
+{% block title %}Форма заявки{% endblock %}
+{% block content_1 %}
+
+					<div class="sideContent"><!-- content side block <input id="l_name" class="fTxt" type="text" name="name" /> -->
+						<div class="bForm"><!-- form block  -->
+							<p class="titleMedium">Форма заявки</p>
+							<div class="wrapFormContent">
+								<form action="." method="POST">{% csrf_token %}
+								
+									<div class="bFormContent">
+										<div class="formLine">
+											<div class="wrapLab"><label for="l_name">ФИО</label></div>
+											<input id="l_name" class="fTxt" type="text" name="name" />
+											<div  class="error" style="color:red;margin-bottom:5px;"></div>
+										</div>
+										<div class="formLine">
+											<div class="wrapLab"><label for="l_company">Компания</label></div>
+											<input id="l_company" class="fTxt" type="text" name="company" />
+											<div  class="error" style="color:red;margin-bottom:5px;"></div>
+										</div>
+										<div class="formLine">
+											<div class="wrapLab"><label for="l_country">Страна</label></div>
+											<input id="l_country" class="fTxt" type="text" name="state" />
+											<div  class="error" style="color:red;margin-bottom:5px;"></div>
+										</div>
+										<div class="formLine">
+											<div class="wrapLab"><label for="l_city">Город</label></div>
+											<input id="l_city" class="fTxt" type="text" name="city" />
+											<div  class="error" style="color:red;margin-bottom:5px;"></div>
+										</div>
+										<div class="formLine">
+											<div class="wrapLab"><label for="l_email">e-mail</label></div>
+											<input id="l_email" class="fTxt" type="text" name="email" />
+											<div  class="error" style="color:red;margin-bottom:5px;"></div>
+										</div>
+										<div class="formLine">
+											<div class="wrapLab"><label for="l_phone">Телефон</label></div>
+											<input id="l_phone" class="fTxt" type="text" name="phone" />
+											<div  class="error" style="color:red;margin-bottom:5px;"></div>
+										</div>
+										<div class="formLine">
+											<div class="bTextarea">
+												<div class="wrapLab"><label for="l_description">Введите описание заказа </label></div>
+												<textarea id="l_description" class="fTxt" name="message"></textarea>
+												<div  class="error" style="color:red;margin-bottom:5px;"></div>
+											</div>											
+										</div>
+										<div class="formLine">
+											<div class="bAddFile">
+												<div class="addFileContainer">
+													<input type="file" value="" />
+													<div class="btBlue"><span>Обзор</span></div>
+													<input class="fTxt" type="text" name="file1" />
+												</div>
+												<p>Вы можете прикрепить файл до 10 mb</p>
+											</div>
+										</div>
+										<div class="formLine">
+											<div class="bCaptcha">
+												<div class="wrapLab"><label for="l_captcha">Введите символы с картинки*</label></div>
+												<div class="captchaRight">
+													<div class="captchaImg"><img src="{{MEDIA_URL}}pict/captcha_01.jpg" alt="" /></div>
+													<input id="l_captcha" class="fTxt" type="text" />
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="formContentBottom">
+										<div class="btBlue"><span>Отправить</span><input type="submit" value="" /></div>
+									</div>
+									<div id="errmsg"></div>
+								</form>
+								<div id="emsg" style="color:#000; padding:10px;"></div>
+							</div>
+						</div><!-- form block end -->
+					
+					</div><!-- content side block -->
+{% endblock %}						

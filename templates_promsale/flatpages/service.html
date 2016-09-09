@@ -1,0 +1,34 @@
+{%  extends "base.html" %}
+{% load tree_menu_tags %}
+{% block title %}{{ flatpage.metatitle|default:flatpage.title }}{% endblock %}
+{% block metakey %}{{ flatpage.metakey }}{% endblock %}
+{% block metades %}{{ flatpage.metades }}{% endblock %}
+
+
+{% block content %}
+<div class="services">
+					<div class="services_nav">
+						{% show_menu "Services" "services_nav" %}
+					</div>
+					
+				<div class="services_design">
+						<div class="breadcrumbs"><a href="#">Главная</a> &rarr; <span>Услуги</span></div>
+						<h3>{{flatpage.title}}</h3>
+						<div class="service round">
+						 
+						 <div class="service_img">
+							<img src="img/services_design_img_1.jpg" alt="" />
+						 </div>
+						  
+							<div class="service_description">
+							 
+							  {{flatpage.content|safe}}
+								<a href="#" class="round gradient">Подробнее</a>
+							</div>
+							<div class="clear"></div>
+						</div>
+				</div>
+						<div class="clear"></div>
+</div>
+
+{% endblock %}

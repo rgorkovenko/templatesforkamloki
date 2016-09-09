@@ -1,0 +1,30 @@
+{%extends "base.html"%}
+{% load thumbnail %}
+{% load pagination_tags %}
+
+{% block title %}Новости{% endblock %}
+{% block metakey %}{% endblock %}
+{% block metades %}{% endblock %}
+
+{% block content %}
+
+	{% autopaginate news 10 %}
+  
+  <div class="pathway"><a href="/">Главная</a> \ Новости</div>
+  <h1>Новости</h1>
+  		
+	<div class="content2">				
+   {% for n in news %}
+    <div class="new">
+       <a href="{% url news_inside n.slug_title %}">{{ n.title }}</a>
+  <br>
+  <div class="grey"><i>{{n.pub_date}}</i></div>
+  {{ n.preview|safe }}
+     </div>
+  {% endfor %} 
+   </div>
+
+	{% paginate %}
+{% endblock %}
+
+

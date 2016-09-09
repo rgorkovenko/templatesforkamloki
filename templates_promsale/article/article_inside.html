@@ -1,0 +1,129 @@
+{%  extends "base.html" %}
+
+{% block title %}{{ article.title_seo|default:article.title }}{% endblock %}
+{% block metakey %}{{ article.metakey }}{% endblock %}
+{% block metades %}{{ article.metades }}{% endblock %}
+{% load thumbnail %}
+
+{% block content %}
+
+	
+<div class="indent">
+                        	<div class="width">
+                            <table cellspacing="0" cellpadding="0" class="blog">
+<tbody><tr>
+	<td valign="top">
+    	<div class="border-left">
+        	<div class="border-right">
+            	<div class="border-top">
+                	<div class="border-bottom">
+                    	<div class="corner-top-left">
+                        	<div class="corner-top-right">
+                            	<div class="corner-bottom-left">
+                                	<div class="corner-bottom-right">
+                                    	<div class="width">
+					<div>
+		
+<div class="title-top">
+    <div class="title-bottom">
+        <div class="title-top-left">
+            <div class="title-top-right">
+                <div class="title-bottom-left">
+                    <div class="title-bottom-right">
+                        <div class="width">
+<table class="contentpaneopen">
+<tbody><tr>
+		{% if article.title_seo %}
+    {% else %}
+        <td width="100%" class="contentheading">
+			 		{{ article.title }}	
+        </td>
+	  {% endif %}
+		<td width="100%" align="right" class="buttonheading">
+</td>
+	
+		<td width="100%" align="right" class="buttonheading">
+</td>
+	
+		<td width="100%" align="right" class="buttonheading">
+</td>
+		</tr>
+</tbody></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="contentpaneopen">
+<tbody><tr>
+	<td class="logotype">
+
+	</td>
+</tr>
+</tbody></table>
+<div class="article-indent">
+	<div class="width">
+<table>
+
+<tbody><tr>
+<td valign="top" colspan="2">
+ 
+<table border="0">   
+  <tbody> 
+
+       <tr>       <div>
+                  {% thumbnail article.image "127x83" crop="center" as im %}
+                  <img align="left" border="0" src="{{ im.url }}" width="127" height="83" />
+                {% empty %}
+                  <img align="left" border="0" src="{{ MEDIA_URL }}image.jpg" width="127" height="83" />
+                {% endthumbnail %}  
+    </div> 
+  
+  <div class="txt">
+  {{ article.content|safe }}
+  </div>     </tr>     
+
+     </tbody> </table> 
+     <div>   
+          </div></td>
+     </tr>
+
+<tr>
+	<td class="modifydate" colspan="2">
+</td>
+</tr>
+
+<tr>
+	<td colspan="2">
+
+	</td>
+</tr>
+
+</tbody></table>
+	</div>
+</div>
+<span class="article_separator">&nbsp;</span>
+		</div>
+	                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</td>
+</tr>
+
+
+</tbody></table>
+
+                            </div>
+                        </div>	
+	
+	
+{% endblock %}

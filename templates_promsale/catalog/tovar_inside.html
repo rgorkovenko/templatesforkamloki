@@ -1,0 +1,116 @@
+{%extends "base.html"%}
+{% load thumbnail %}
+{% load pagination_tags %}
+{% load catalog_tags %}
+
+{% block title %}{{ tovar.title_seo|default:tovar.title }}{% endblock %}
+{% block metakey %}{{ tovar.metakey }}{% endblock %}
+{% block metades %}{{ tovar.metades }}{% endblock %}
+
+{% block content %}
+<script type="text/javascript">
+	var $j=jQuery.noConflict();
+		 $j(document).ready(function() {
+
+        $j('a#lightbox').lightBox();
+        $j('input.addtocart_button').click(function(){
+          var id_tovara=$j(this).attr('tovar');
+          var kolvo = $j(this).prev().prev().prev().find('input#quantity'+id_tovara).val();
+          if (parseInt(kolvo)>=1) 
+            location.href="/cart/add/"+id_tovara+"/"+kolvo+"/" 
+          else{
+            if (parseInt(kolvo)>=0)
+              alert("Введите коректное число товаров");
+            else
+              alert("Вы хотите стать нашим поставщиком?");
+           }
+        });
+});
+</script>
+
+<div class="main">
+		<div id="content">	
+				<div class="wrapper">
+
+										<div class="container">
+																	
+						<div class="content-indent">
+							<div id="vmMainPage">
+<div class="Product-border"> 
+	<div class="wrapper">
+		<div class="float-left">
+			<div class="browseProductImageContainer">
+				<div class="browseProductImage">
+        
+      {% thumbnail tovar.image "600x620" crop="center" as im %}                    
+        <a href="{{im.url}}" id="lightbox" title="{{tovar.title}}">
+        			{% thumbnail tovar.image "220x224" crop="center" as im2 %}      
+				        	<img alt="{{tovar.title}}" src="{{im2.url}}">
+                  <br>Посмотреть
+               {%endthumbnail%}        
+        </a>
+        {%endthumbnail%}
+	</div>
+							</div>
+			
+		</div>	
+		<div class="floatElement">
+			<h2 class="browseProductTitle">
+				<span class="product_name" title="{{tovar.title}}" href="#">
+				{{tovar.title}}			</span> 			</h2>
+						<div class="product-divider">
+				<div class="vmCartContainer1">
+					
+
+						 
+<div class="vmCartContainer">
+
+<div class="vmCartDetails">
+ 
+</div>
+         
+    <div style="width:auto;"> <span style=" display:block;" class="quantity"><label class="quantity_box" for="quantity{{tovar.id}}">Кол-во:&nbsp;</label><input type="text" value="1" name="quantity[]" id="quantity{{tovar.id}}" size="4" class="inputboxquantity">
+		<input type="button" id="" onclick="var qty_el = document.getElementById('quantity{{tovar.id}}'); var qty = qty_el.value; if( !isNaN( qty )) qty_el.value++;return false;" class="quantity_box_button quantity_box_button_up png">
+		<input type="button" onclick="var qty_el = document.getElementById('quantity{{tovar.id}}'); var qty = qty_el.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 0 ) qty_el.value--;return false;" class="quantity_box_button quantity_box_button_down png"></span>
+		</div>   
+  
+
+</div>				</div>
+				<div class="browsePriceContainer">
+						<span class="productPrice">
+		{{tovar.price|format1000}}		</span>
+    {%if tovar.oldprice%}
+	<span style="text-decoration:line-through;" class="product-Old-Price">
+		{{tovar.oldprice|format1000}}</span>
+	  {%endif%}
+				</div>
+			</div>	
+			<div class="clear"></div>			
+			<div class="description">
+				
+        {{tovar.content|safe }}
+        
+        
+        	</div>
+		<input type="button" title="В корзину" value="В корзину" class="addtocart_button" tovar="{{tovar.id}}">
+
+		</div>
+	</div>
+								
+	<div>
+		</div>
+	<div style="padding-top:20px;" class="wrapper">
+	<span class="previous_page"><a href="{% url tovar_inside tovar.category.slug_title tovar.back.slug_title %}" class="previous_page">Пред. товар</a></span><span class="next_page"><a href="{% url tovar_inside tovar.category.slug_title tovar.next.slug_title %}" class="next_page">След. товар</a></span>	</div>
+</div>
+<div style="text-align:center;display:none;visibility:hidden;" id="statusBox"></div></div>
+
+						</div>
+									</div>
+			</div>
+		</div>	
+
+	
+ 
+{% endblock %}
+
+

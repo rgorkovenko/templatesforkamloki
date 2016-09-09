@@ -1,0 +1,190 @@
+{% load tree_menu_tags %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ 
+    <title>{% block title %}Главная{% endblock %}</title>
+    <meta name="keywords" content="{% block metakey %}{% endblock %}" />
+    <meta name="description" content="{% block metades %}{% endblock %}" />
+
+    <meta name="robots" content="index, follow" />
+    <link rel="stylesheet" type="text/css" href="/static/kamlock/style.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/media/js/jquery.form.js"></script>
+
+    <script type="text/javascript" src="/static/kamlock/js/my.js"></script>
+    <meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
+    <link rel="shortcut icon" type="image/x-icon" href="/static/kamlock/img/favicon.ico">
+	<meta name='yandex-verification' content='74485768414853e5' />
+</head>
+
+<body>
+
+    <div class="knt">
+
+        <div class="header_gradient">
+            <div class="header">
+                <div class="inn">
+                    <a class="logo" href="/"></a>
+                    <div class="slogan">Интернет магазин автофурнитуры</div>
+                    <form action="/search/" class="search">
+                        <input class="search_input" value="" name="q" placeholder="Поиск по каталогу">
+                    </form>
+                    <div class="rgt">
+                        <div class="phone">{{ settings.phone|safe }}</div>
+                        <div class="call"><span class="button call_order">Заказать звонок</span></div>
+                        <div class="ktk">
+                            <span><a class="mail" href="mailto:{{ settings.email|safe }}">{{ settings.email|safe }}</a></span>
+                            <span class="adres">{{ settings.footer_contact|safe }}</span>
+                            <span class="time">{{ settings.operation_time|safe }}</span>
+                        </div>
+                    </div>
+                    <div class="mini">
+                        {% include "cart/mini.html" %}
+                    </div>    
+                </div>
+            </div>
+        </div>
+
+        {% show_menu "TopMenu" "top_menu" %}
+
+		{% block slider %}
+        {% endblock %}
+
+        {% block breadcrumbs %}
+        {% endblock %}    
+
+		
+		{% block content %}
+        {% endblock %}
+
+        
+        {% block profit %}
+        {% endblock %}
+
+        <div class="footer_gradient">
+            <div class="footer">
+                <div class="inn">
+                    {% show_menu "TopMenu" "bottom_menu" %}
+
+                    <div class="btc">
+                        <div class="btc_phone">{{ settings.phone|safe }}</div>
+                        <div class="btc_mail"><a class="mail" href="mailto:{{ settings.email|safe }}">{{ settings.email|safe }}</a></div>
+                        <div class="btc_time">{{ settings.operation_time|safe }}</div>
+                        <div class="btc_adres">{{ settings.footer_contact|safe }}</div>
+                        <div class="btc_adres">{{ settings.content2|safe }}</div>
+						<div class="btc_adres" style="margin-top:15px;"><a href="/map/"><img src="/media/images/site-map.png" width="16" height="16" /></a></div>
+						
+                    </div>
+
+                    <div class="rgb">
+                        <div class="rgb_logo"></div>
+                        <div class="rgb_copy">{{ settings.footer_copyright|safe }}</div>
+                    </div>
+					
+                    <div class="up66"><a target="_blank" href="http://up66.ru/razrabotka-saytov.html">Разработка сайта</a> - Студия Апдейт</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="fon"></div>
+    <div class="lightbox">
+        <div class="close"></div>
+        <div class="img_kont"></div>
+    </div>
+    <div class="call_form">
+        <div class="close" title="Закрыть"></div>
+        <div class="h4">Заказать звонок</div>
+        <form action="" id="call_form" method="post">{% csrf_token %}
+            <div id="emsg"></div>
+            <input type="text" class="inputbox" name="name" placeholder="Имя:">
+            <div  class="error form_name" style="color:red;margin-bottom:5px;"></div>
+            
+            <input type="text" class="inputbox" name="phone" placeholder="Телефон:">
+            <div  class="error form_phone" style="color:red;margin-bottom:5px;"></div>
+            
+            <input type="submit" class="button" value="Заказать звонок">
+        </form>
+    </div>
+
+	<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter31302938 = new Ya.Metrika({
+                    id:31302938,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/31302938" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+    
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter38755885 = new Ya.Metrika({
+                    id:38755885,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true,
+                    trackHash:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/38755885" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64762528-8', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+{%  extends "base.html" %}
+{%load thumbnail%}
+{% load catalog_tags %}
+{% block title %}Корзина{% endblock %}
+{% block metakey %}{% endblock %}
+{% block metades %}{% endblock %}
+  
+{%block content%}
+
+<script type="text/javascript">
+	var $j=jQuery.noConflict();
+		 $j(document).ready(function() {
+
+        $j('a#lightbox').lightBox();
+
+        $j('input#update').click(function(){
+          var id_tovara=$j(this).attr('tovar');
+          var kolvo = $j(this).prev().val();    
+         location.href="/cart/update/"+id_tovara+"/"+kolvo+"/" 
+        });
+        
+        $j('input#delete').click(function(){
+          var id_tovara=$j(this).attr('tovar');
+         location.href="/cart/del/"+id_tovara+"/" 
+        });
+        
+});
+</script>
+
+
+<div class="main">
+		<div id="content">	
+				<div class="wrapper">
+             										<div class="container">
+																	
+						<div class="content-indent">
+							<div id="vmMainPage">
+<h2 class="title">Корзина</h2><div style="padding:20px 0px 0px 0px;">
+<!-- Cart Begins here -->
+<div class="basket">
+<table width="99%" cellspacing="0" cellpadding="0" border="0">
+	<tbody><tr align="left" class="sectiontableheader">
+		<td class="first"><span>Название</span></td>
+		<td class="second"><span>Артикул</span></td>
+		<td class="three"><span>Цена</span></td>
+		<td class="four"><span>Кол-во / Обновить</span></td>
+		<td class="last"><span>Сумма</span></td>
+	</tr>
+  {%for n in cart%}
+			<tr valign="top" class="sectiontableentry1 png">
+			<td class="first"><span><a href="{%url  tovar_inside n.product.category.slug_title n.product.slug_title %}"><strong>{{n.product.title}}</strong></a><br></span></td>
+			<td class="second"><span>{{n.product.sku}}</span></td>
+			<td class="three"><span>{{n.product.price|format1000}} руб.</span></td>
+			<td class="four"><span>
+  <strong class="left1">
+		<input type="text" value="{{n.quantity}}" id="quantity" maxlength="4" size="4" class="inputbox" title="Обновить число товара в корзине">
+    <input align="middle" type="image" alt="Обновить" src="/media/images/update_quantity_cart.png" title="Обновить число товара в корзине" id="update" tovar="{{n.product.id}}">
+  </strong>
+  <strong class="left2">
+  	<input align="middle" type="image" alt="Удалить из корзины" src="/media/images/remove_from_cart.png" title="Удалить из корзины" tovar="{{n.product.id}}" id="delete">
+  </strong></span></td>
+			<td class="last"><span>{{n.total_price}}</span></td>
+		</tr>
+    {%endfor%}
+		<!--Begin of SubTotal, Tax, Shipping, Coupon Discount and Total listing -->
+		<!--		<tr class="sectiontableentry1 aft">
+			<td align="right" colspan="4"><span>Subtotal:</span></td> 
+			<td align="left" class="last" colspan="3"><span>$233.18</span></td>
+		</tr>
+    <tr class="sectiontableentry1 aft">
+		<td align="right" valign="top" colspan="4"><span>Tax Total:</span></td> 
+		<td align="left" class="last" colspan="3"><span>$22.73</span></td>
+		</tr>-->
+		<tr class="sectiontableentry1 aft1">
+		<td align="right" colspan="4"><span>Итого:</span></td>
+		<td align="left" colspan="3"><strong>{{cart.summ}}</strong></td>
+	</tr>
+</tbody></table>
+</div>
+
+<!-- End Cart --><br></div><div style="padding:14px 0px 0px 0px; overflow:hidden; width:235px;">
+    
+{%if cart.summ%}    
+<div style="text-align:left; position:relative;">
+   <span class="arrow"></span><a class="checkout_link png" title="Заказать" href="/cart/send/">Заказать</a>	
+</div>
+{%endif%}
+	
+	</div>
+
+<div style="text-align:center;display:none;visibility:hidden;" id="statusBox"></div></div>
+
+						</div>
+									</div>
+			</div>
+		</div>	
+	
+ 
+  
+{% endblock %}

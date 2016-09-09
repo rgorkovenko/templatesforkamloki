@@ -1,0 +1,39 @@
+{% load tree_menu_tags %}
+
+{% ifequal menu_type "top_menu" %}                                                                                                                                                                    
+<ul class="mMenuItems">
+{% for menu_item in menu.root_item.children %}
+             <li item-id="{{ forloop.counter }}" class="{%if request.path|startswith:menu_item.url%}{%if request.path = '/' and menu_item.url = '/'%}active{%else%}{%if not menu_item.url = '/'%}active{%endif%}{%endif%}{%endif%}"><a href="{{ menu_item.url }}"><span>{{ menu_item.caption }}</span><em class="corner"></em></a></li>
+{% endfor %}
+</ul>
+	{% if menu_item.has_children %}
+        <li item-id="{{ forloop.counter }}"><a class="" href="{{ menu_item.url }}"><span>{{ menu_item.caption }}</span><em class="corner"></em></a></li>
+		<div class="mMenuSubItems">
+            <ul item-id="{{ forloop.counter }}">
+                {% for child in menu_item.children %}
+                    <li><a href='{{ child.url }}'>{{ child.caption }}</a></li>
+               
+            </ul>
+				 {% endfor %}
+		</div>
+		<div class="mMenuShadows"></div>
+    {% endif %}
+{% endifequal %}
+
+{% ifequal menu_type "main_service" %}
+<ul class="">
+			{% for menu_item in menu.root_item.children %}
+          <li {%if menu_item.url == request.path%}class="main_service_active" id="main_service_active"{%endif%}><a href="{{ menu_item.url }}"><span>{{ menu_item.caption }}</span></a>
+			{% endfor %}
+</ul>
+{% endifequal %}
+
+
+
+{% ifequal menu_type "services_tabs" %}
+<ul class="services_design_tabs">
+			{% for menu_item in menu.root_item.children %}
+          <li><a href="{{ menu_item.url }}" class="gradient_2">{{ menu_item.caption }}</a>
+			{% endfor %}
+</ul>
+{% endifequal %}

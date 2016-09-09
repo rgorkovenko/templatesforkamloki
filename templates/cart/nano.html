@@ -1,0 +1,8 @@
+{% load pytils_numeral %}
+{% load catalog_tags %}
+Корзина <span class="cart_total">( {{ cart.count }} това{{ cart.count|choose_plural:"р,ра,ров" }}, <span class="cart_total_summa">{{ cart.summ|format1000 }}</span> руб. )</span><img class="cart_arrow" src="/static/kamlock/img/cart-arrow.png" {% if rotare %}style="transform: rotate(180deg);"{% endif %}>
+
+<script>
+	var CartTotalSumma = $('.cart_total_summa').text();
+	$('td.itogo_summa').text(CartTotalSumma);
+</script>

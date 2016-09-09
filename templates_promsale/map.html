@@ -1,0 +1,33 @@
+{%  extends "base_1.html" %}
+{% block title %}Карта сайта{% endblock %}
+{% block metakey %}{% endblock %}
+{% block metades %}{% endblock %}
+				{%block breadcrumbs%}
+				<div class="breadcrumbs"><!-- breadcrumbs block <li><em>-</em><a href="#">Мультимедиа. Графика. Дизайн</a></li> -->
+					<ul>
+						<li><em>-</em><a href="/">Главная</a></li>
+<li class="active"><em>/</em><span>Карта сайта</span></li>
+						
+					</ul>
+				</div><!-- breadcrumbs block end -->
+				{%endblock%}
+{%block content_1%}
+<h1>Карта сайта</h1>
+<br>
+<a href="/" >Главная</a><br> 
+<a href="{%url catalog%}" >Каталог</a><br>
+                    {%for n in categ %}
+                        --- <a href="{%url cat n.slug_title%}">{{n.title}}</a><br>
+    										  {%for m in n.get_children%}
+        									   ------- <a href="{%url cat m.slug_title%}">{{m.title}}</a><br>
+    										  {%endfor%} 
+
+                    {% endfor %} 
+<a href="{%url category_list%}" >Статьи</a><br>
+                    {%for n in category_news %}
+                        --- <a href="{% url category_inside n.slug_title%}">{{n.title}}</a><br>
+    										  {%for m in n.news%}
+        									   ------- <a href="{%url news_inside m.categrory.slug_title m.slug_title%}">{{m.title}}</a><br>
+    										  {%endfor%}                                            
+                    {% endfor %}
+{%endblock%}

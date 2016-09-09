@@ -1,0 +1,29 @@
+{%  extends "base_1.html" %}
+{% block title %}Поиск{% endblock %}
+{% block metakey %}{% endblock %}
+{% block metades %}{% endblock %}
+{%block breadcrumbs%}
+				<div class="breadcrumbs"><!-- breadcrumbs block <li><em>-</em><a href="#">Мультимедиа. Графика. Дизайн</a></li> -->
+					<ul>
+						<li><em>-</em><a href="/">Главная</a></li>	
+						<li class="active"><em>/</em><span>Поиск</span></li>
+					</ul>
+				</div><!-- breadcrumbs block end -->
+{%endblock%}
+{%block content_1%}
+<div style="min-height:400px;color:#000;">
+                    Вы искали: "{{query}}"<br>
+                    <br>                   
+                    Результаты поиска:<br>
+                    {%if not good and not category and not news%}ничего не нашлось{%endif%}
+                    {%for n in good%}
+                     <a target="_blank" href="{% url item n.category.slug_title n.slug_title %}" style="color:#800000">{{n.title}}</a><br>
+                     {%endfor%}
+                    {%for n in category%}
+                     <a target="_blank" href="{%url cat  n.slug_title%}" style="color:#000080">{{n.title}}</a><br>
+                     {%endfor%} 
+                    {%for n in news%}
+                     <a target="_blank" href="{%url news_inside  n.slug_title%}" style="color:#000080">{{n.title}}</a><br>
+                     {%endfor%}					 
+ </div>
+{% endblock %}

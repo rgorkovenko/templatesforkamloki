@@ -1,0 +1,78 @@
+{%  extends "base.html" %}
+{%load thumbnail%}
+{% load catalog_tags %}
+{% block title %}Заказ{% endblock %}
+{% block metakey %}{% endblock %}
+{% block metades %}{% endblock %}
+  
+{%block content%}
+
+<div class="main">
+		<div id="content">	
+				<div class="wrapper">
+										<div class="container">
+															
+						<div class="content-indent">
+							<div id="vmMainPage">
+<h3>Заказ</h3><div>
+	<div id="register_stretcher" class="stretcher" style="padding-top: 0px; border-top: medium none; padding-bottom: 0px; border-bottom: medium none; overflow: hidden; visibility: visible; opacity: 1; height: 1017px;">
+
+<form method="post">
+{% csrf_token %}
+		<div style="width:90%;">
+    <div style="padding:5px;text-align:left;"><strong>(* = обязательные к заполнению поля)</strong></div><fieldset>
+<legend class="sectiontableheader">О Вас</legend>
+<input type="hidden" value="1" name="register_account" id="register_account">
+<div class="formLabel " id="username_div"><label for="username_field">Ваши ФИО </label><strong>* </strong></div>
+<div id="username_input" class="formField">
+<input type="text" maxlength="250" class="inputbox" value="{{form.name.value|default:''}}" size="30" name="name" id="username_field">
+{%if form.name.errors%}({{ form.name.errors.as_text }}){%endif%}
+<br></div>
+<br style="clear:both;">
+
+
+<div class="formLabel " id="email_div">
+<label for="email_field">Email</label><strong>* </strong> </div>
+<div id="email_input" class="formField">
+<input type="text" maxlength="100" class="inputbox" value="{{form.email.value|default:''}}" size="30" name="email" id="email_field">
+{%if form.email.errors%}({{ form.email.errors.as_text }}){%endif%}
+<br></div>
+ <br style="clear:both;">
+
+<div class="formLabel " id="tel_div">
+<label for="tel_field">Телефон</label><strong>* </strong> </div>
+<div id="tel_input" class="formField">
+<input type="text" maxlength="100" class="inputbox" value="" size="30" name="tel" id="tel_field">
+{%if form.tel.errors%}({{ form.tel.errors.as_text }}){%endif%}
+<br></div>
+ <br style="clear:both;">
+ 
+</fieldset>
+<fieldset>
+				     <legend class="sectiontableheader">Доп. информация</legend>
+<div class="formLabel " id="company_div"><label for="company_field">Комментарий</label> </div>
+	      <div id="company_input" class="formField">
+<textarea class="inputbox" style="height:200px;width:550px;" size="30" name="content" id="content_field">{{form.content.value|default:''}}</textarea>
+<br></div>
+				      <br style="clear:both;">
+              
+           
+              
+</fieldset>
+
+		<input type="submit" class="button" value="Отправить">
+
+	</form>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+						</div>
+									</div>
+			</div>
+		</div>	
+
+{% endblock %}

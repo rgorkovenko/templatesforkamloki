@@ -1,0 +1,236 @@
+{%  extends "base_1.html" %}
+{% load thumbnail %}
+{% block title %}Каталог{% endblock %}
+
+
+{% block content_1 %}
+
+
+					<div class="sideContent"><!-- content side block -->
+						<div class="bCatalog sortTabsWrap"><!-- catalog block, sorting tabs wrapper-->							
+							<form action="" >
+								<div class="catalogHead2">
+									<p class="titleMedium">Каталог</p>									
+									</div><!-- pagination end-->
+								</div>
+								<div class="catalogContent2">
+												<div class="bCatalogList2"><!-- catalog list block -->
+													<ul>
+													{%with cat as c %}
+													{%for c in c.get_children%}
+														<li>
+															<a href="{%url cat c.slug_title%}" class="bImg">
+													{% thumbnail c.image "68x46" crop="center" as im %}         
+														<img src="{{im.url}}" alt="{{c.title}}" />
+													{%endthumbnail%}
+															</a>
+															<div class="catalogItemCont">
+																<p class="name"><a href="{%url cat c.slug_title %}">{{c.title}}</a></p>
+																	{{c.technical_char|safe}}
+															</div>
+														</li>	
+													{%endfor%}
+														{%endwith%}
+													</ul>
+												</div><!-- catalog list block  -->
+								</div>
+							</form>
+						</div><!-- catalog block, sorting tabs wrapper end -->
+				<div class="sideContent">
+					
+						<div class="bCatalog sortTabsWrap">						
+							<form action="" >
+								<div class="catalogHead">
+									<h1 class="titleMedium">Категории</h1>									
+									<div class="sortTabsHead">
+										<ul>
+											<li class="item1 active"></li>
+											<li class="item2"></li>
+											<li class="item3"></li>
+											<li class="item4"></li>
+										</ul>
+									</div><
+									<div class="bPagination">
+										<div>
+											<a href="#" class="first"></a>
+											<a href="#" class="prev"></a>
+											<input class="fTxt" type="text" value="" />
+											<a href="#" class="next"></a>
+											<a href="#" class="last"></a>
+										</div>
+									</div>
+								</div>
+								<div class="catalogContent">
+									<div class="catalogScroll">
+										<div class="sortTabsContent">
+											<div class="sTabsContItem active">
+												<div class="bCatalogList">
+													<ul class="testa">
+													{%for c in cat%}
+														<li>
+															<a href="{%url cat c.slug_title%}" class="bImg">
+													{% thumbnail c.image "68x46" crop="center" as im %}         
+														<img src="{{im.url}}" alt="{{c.title}}" />
+													{%endthumbnail%}
+															</a>
+															<div class="catalogItemCont">
+																<p class="name"><a href="{%url cat c.slug_title%}">{{c.title}}</a></p>
+																	{{c.technical_char|safe}}
+															</div>
+															<div class="toolTipeCont">
+																<div>
+																		{%for m in c.get_values%}
+																		{%if m.values and m.values != "False" %}
+																			<p><strong>{{ m.schema.title }}:</strong>
+																			{% if m.schema.datatype == 'many' %}
+																		<select>
+																		{% for value in m.values %}
+																			<option val="{{value}}">{{ value|default:"" }}</option>
+																		{% endfor %}
+																		</select>
+																	{% else %}
+																	{% if m.schema.datatype == 'choice'  %}
+																		  {% for value in m.values %}
+																			  {{ value|default:"" }}
+																		  {% endfor %}                    
+																	{% else %}
+																		{% if m.schema.datatype == 'bool' %}
+																			{% if m.values == "True" %}Да{% else %}Нет{% endif %}
+																		{% else %}
+																			{{ m.values|default:"" }}
+																		{% endif %}
+																	{% endif %}
+																	{% endif %}
+															</p>
+															{% endif %}  
+															{%endfor%}
+																</div>
+															</div>
+														</li>	
+														{%endfor%}
+													</ul>
+												</div><!-- catalog list block  -->
+											
+											</div>
+											<div class="sTabsContItem">
+												<div class="bCatalogList type2"><!-- catalog list type2 block -->
+													<ul>
+														{%for c in cat%}
+														<li>
+															<a href="{%url cat c.slug_title%}" class="bImg">
+													{% thumbnail c.image "68x46" crop="center" as im %}         
+														<img src="{{im.url}}" alt="{{c.title}}" />
+													{%endthumbnail%}
+															</a>
+															<div class="catalogItemCont">
+																<p class="name"><a href="{%url cat c.slug_title%}">{{c.title}}</a></p>
+																<p class="price">{{c.price}}</p>
+																<p class="description">{{c.desc}}</p>
+															</div>															
+														</li>		
+														{%endfor%}
+													</ul>
+												</div>
+											</div>
+											<div class="sTabsContItem">
+												<div class="bCatalogList type3"><!-- catalog list type3 block -->
+													<ul>
+													{%for c in cat%}
+														<li>
+															<a href="" class="bImg">
+													{% thumbnail c.image "68x46" crop="center" as im %}         
+														<img src="{{im.url}}" alt="{{c.title}}" />
+													{%endthumbnail%}
+															</a>
+															<div class="catalogItemCont">
+																<p class="name"><a href="">{{c.title}}</a></p>
+																<p class="price">{{c.price}}</p>
+																<p class="description">{{c.detail_desc}}</p>
+															</div>															
+														</li>		
+													{%endfor%}
+														
+									
+													</ul>
+													
+												</div>
+											
+											</div>
+											<div class="sTabsContItem">
+												<div class="bCatalogList type4"><!-- catalog list type4 block -->
+													<ul>
+													{%for c in cat%}
+														<li>
+															<a href="{%url cat c.slug_title%}" class="bImg">
+													{% thumbnail c.image "116x74" crop="center" as im %}         
+														<img src="{{im.url}}" alt="{{c.title}}" />
+													{%endthumbnail%}
+															</a>
+															<div class="catalogItemCont">
+																<div class="catalogItemContInfo">																	
+															{%for m in c.get_values|slice:'3:5'%}
+																		{%if m.values and m.values != "False" %}
+																			<p><strong>{{ m.schema.title }}:</strong>
+																			{% if m.schema.datatype == 'many' %}
+																		<select>
+																		{% for value in m.values %}
+																			<option val="{{value}}">{{ value|default:"" }}</option>
+																		{% endfor %}
+																		</select>
+																	{% else %}
+																	{% if m.schema.datatype == 'choice'  %}
+																		  {% for value in m.values %}
+																			  {{ value|default:"" }}
+																		  {% endfor %}                    
+																	{% else %}
+																		{% if m.schema.datatype == 'bool' %}
+																			{% if m.values == "True" %}Да{% else %}Нет{% endif %}
+																		{% else %}
+																			{{ m.values|default:"" }}
+																		{% endif %}
+																	{% endif %}
+																	{% endif %}
+															</p>
+															{% endif %}  
+															{%endfor%}
+																</div>
+																<div>
+																	<div class="catalogItemContTop">
+																		<p class="price">{{c.price}}</p>
+																		<p class="name"><a href="{%url cat c.slug_title%}">{{c.title}}</a>  <a href="{%url cat c.category.slug_title%}">{{c.category.title}}</a></p>
+																		
+																	</div>
+																	<p class="description">{{c.detail_desc|safe}}</p>
+																</div>
+															</div>															
+														</li>		
+														{%endfor%}
+														
+													</ul>
+												</div>
+											
+											</div>
+										</div><!-- sorting tabs content end-->
+									</div>
+									<div class="catalogBottom">
+										<div class="bPagination"><!-- pagination -->
+											<div>
+												<a href="#" class="first"></a>
+												<a href="#" class="prev"></a>
+												<input class="fTxt" type="text" value="" />
+												<a href="#" class="next"></a>
+												<a href="#" class="last"></a>
+											</div>
+										</div><!-- pagination end-->
+									</div>
+									<div class="blueBottom"></div>
+								</div>
+								
+							</form>
+						</div><!-- catalog block, sorting tabs wrapper end -->				
+					
+						
+						
+					</div><!-- content side block -->
+					
+{% endblock %}		

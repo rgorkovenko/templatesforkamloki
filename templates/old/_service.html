@@ -1,0 +1,70 @@
+{%  extends "base.html" %}
+{% block title %}Статьи{% endblock %}
+{% load tree_menu_tags %}
+{% load thumbnail %}
+{% block content %}
+<div class="services">
+					<div class="services_nav">
+						<ul>
+							{%for cat in categorys%}
+								<li  class="{%if cat.get_childrens%}gradient_2  service_subnav{%else%}gradient_2{%endif%}"><a href="{% url services cat.slug_title%}">{{cat.title}}</a>
+								{%if cat.get_childrens%}              
+									<ul class="services_subnav">
+									{%for ca in cat.get_childrens%}
+									<div class="relative">
+										<li class="{%if ca.get_childrens%}services_1_subnav{%endif%}"><a href="{% url services ca.slug_title%}">{{ca.title}}</a></li>
+											{%if ca.get_childrens%}
+										<div class="services_subnav_1"> 
+											<ul class="">
+											<img src="{{MEDIA_URL}}img/services_subnav_arrow.png" alt="" />
+											{%for c in ca.get_childrens%}
+												
+												<li><a href="{% url services c.slug_title%}">{{c.title}}</a></li>
+											
+											{%endfor%}
+											</ul>
+										</div>	
+											{%endif%}
+										</div>
+									{%endfor%}
+									</ul>	              
+								{%endif%}
+							</li>	
+							{%endfor%}
+						</ul>	
+						{%include "form.html"%}
+							<div class="services_recall round">
+										{{recalls.title|safe}}
+											{{recalls.name|safe}}<br />
+												{{recalls.content|safe}}
+													{{recalls.fio|safe}}<br /><br />
+													<p align="right"><em > {{recalls.pub_date}}</em></p>
+										 <img src="{{MEDIA_URL}}img/services_recall_arrow.png" alt="" />
+							 </div>
+							 <a href="{%url recalls_list%}" id="services_recall_more"><img src="{{MEDIA_URL}}img/services_recall_button.png" alt="" /></a>
+					</div>
+					
+				<div class="services_design">
+						<div class="breadcrumbs"><a href="#">Главная</a> &rarr; <span>Услуги</span></div>
+						<h3>Услуги</h3>
+						 {% for c in category %}
+						<div class="service round">
+						 <div class="service_img">
+        			{% thumbnail c.image "240x176" crop="left" as im %}      
+				        	<img alt="{{c.title}}" src="{{im.url}}">
+					{%endthumbnail%}        
+						 </div>
+						 
+							<div class="service_description">
+							 <h5>{{c.title}}</h5>
+							 <p> {{c.preview}} </p>
+								<a href="{% url category_inside c.slug_title %}" class="round gradient">Подробнее</a>
+							</div>
+							<div class="clear"></div>
+							
+						</div>
+						{%endfor%}
+				</div>
+						<div class="clear"></div>
+</div>
+{% endblock %}						

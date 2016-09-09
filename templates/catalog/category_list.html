@@ -1,0 +1,121 @@
+{%extends "base.html"%}
+{% load thumbnail %}
+{% load pagination_tags %}
+
+{% block title %}Продукция{% endblock %}
+{% block metakey %}{% endblock %}
+{% block metades %}{% endblock %}
+
+
+{%block slider%}
+   <img src="/media/images/products.png">
+{%endblock%}
+
+{% block content %}
+        <div class="main">
+
+            <div class="catalog">
+                <div class="inn">
+                    <div class="catalog_description">
+                        {{ settings.phone|safe }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="catalog_item">
+                <div class="inn">
+                    <table>
+                        <tr>
+                            <td>
+                                <h2><a href="#">Паронит</a></h2>
+                                <a href="#"><img class="catalog_img" src="/images/category_img.jpg"></a>
+                            </td>
+                            <td>
+                                <p>Камлоки - это быстросъемные муфты используемые для перекачки различных жидкостей в том числе топлива, пищевых продуктов, кислот и т.д. Камлоки изготавливаются по американским и европейским стандартам. В зависимости от потребности заказчика они могут быть изготовлены из ковкого или литьевого алюминия, бронзы, нержавеющей стали или различных пластиков.</p>
+                            </td>
+                            <td></td>
+                            <td>
+                                <ul>
+                                    <li><a href="/subcategory.html">Подкатегория 1</a></li>
+                                    <li><a href="/subcategory.html">Подкатегория 2</a></li>
+                                    <li><a href="/subcategory.html">Подкатегория 3</a></li>
+                                    <li><a href="/subcategory.html">Подкатегория 4</a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="catalog_item">
+                <div class="inn">
+                    <table>
+                        <tr>
+                            <td>
+                                <h2><a href="#">Паронит</a></h2>
+                                <a href="#"><img class="catalog_img" src="/images/category_img.jpg"></a>
+                            </td>
+                            <td>
+                                <p>Камлоки - это быстросъемные муфты используемые для перекачки различных жидкостей в том числе топлива, пищевых продуктов, кислот и т.д. Камлоки изготавливаются по американским и европейским стандартам. В зависимости от потребности заказчика они могут быть изготовлены из ковкого или литьевого алюминия, бронзы, нержавеющей стали или различных пластиков.</p>
+                            </td>
+                            <td></td>
+                            <td>
+                                <ul>
+                                    <li><a href="/subcategory.html">Подкатегория 1</a></li>
+                                    <li><a href="/subcategory.html">Подкатегория 2</a></li>
+                                    <li><a href="/subcategory.html">Подкатегория 3</a></li>
+                                    <li><a href="/subcategory.html">Подкатегория 4</a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="catalog_item">
+                <div class="inn">
+                    <table>
+                        <tr>
+                            <td>
+                                <h2><a href="#">Паронит</a></h2>
+                                <a href="#"><img class="catalog_img" src="/images/category_img.jpg"></a>
+                            </td>
+                            <td>
+                                <p>Камлоки - это быстросъемные муфты используемые для перекачки различных жидкостей в том числе топлива, пищевых продуктов, кислот и т.д. Камлоки изготавливаются по американским и европейским стандартам. В зависимости от потребности заказчика они могут быть изготовлены из ковкого или литьевого алюминия, бронзы, нержавеющей стали или различных пластиков.</p>
+                            </td>
+                            <td></td>
+                            <td>
+                                <ul>
+                                    <li><a href="/subcategory.html">Подкатегория 1</a></li>
+                                    <li><a href="/subcategory.html">Подкатегория 2</a></li>
+                                    <li><a href="/subcategory.html">Подкатегория 3</a></li>
+                                    <li><a href="/subcategory.html">Подкатегория 4</a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="clr"></div>
+        </div>
+
+  <div class="pathway"><a href="/">Главная</a> \ Продукция</div>
+  <h1>Продукция</h1>
+  		
+	<div class="content2">				
+   {% for n in categorys %}
+    <div class="category">
+       <div class="catimage"><a href="{% url category_inside n.slug_title %}"><img src="{{MEDIA_URL}}{{n.image}}"></a></div>
+       <a href="{% url category_inside n.slug_title %}">{{ n.title }}{%if n.title2%}<br>{{n.title2}}{%endif%}</a>
+  <br>
+  <div class="anonce">
+  {{ n.anonce }}
+     </div>
+   </div>     
+  {% endfor %} 
+  </div>
+{% endblock %}
+
+

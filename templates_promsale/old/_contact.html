@@ -1,0 +1,49 @@
+{%  extends "base.html" %}
+{% load tree_menu_tags %}
+{% load thumbnail %}
+{% block title %}{{ contactt.title_seo|default:contactt.title }}{% endblock %}
+{% block metakey %}{{ contactt.metakey }}{% endblock %}
+{% block metades %}{{ contactt.metades }}{% endblock %}
+{% block content %}
+	<div class="contact">
+        <div class="breadcrumbs"><a href="#">Главная</a> &rarr; <span>Контакты</span></div>
+        <div class="contact_info">
+            <h3>{{contactt.title}}</h3>
+                <p>{{contactt.phone|safe}}</p>
+                <p>{{contactt.phone_2|safe}}</p>
+                    <a href="#" class="contact_callback round gradient">Заказать обратный звонок</a>
+                   <span class="contact_bold">Факс:</span> {{contactt.fax|safe}}<br /><br /><br />
+                   <span class="contact_bold">E-mail:</span> <a href="#" style="color:#b00000;" >{{contactt.email|safe}}</a> <br /><br /><br />
+                   <span class="contact_bold">Адрес:</span> {{contactt.adress|safe}}<br /><br />
+         </div>
+        
+        <div class="contact_feedback round">
+            <h3>Обратная связь</h3>
+                <form name="contact" id="contact" action="." method="post">{% csrf_token %}
+                    <p><img src="{{MEDIA_URL}}img/contact_feedback_name_bg.png" alt="" />Ф.И.О.:<br />
+                        {{form.name}}
+                    </p>
+                    <p><img src="{{MEDIA_URL}}img/contact_feedback_phone_bg.png" alt="" />Телефон: <br />
+                        {{form.phone}}
+                     </p>
+                     <p><img src="{{MEDIA_URL}}img/contact_feedback_email_bg.png" alt="" />E-mail:<br />
+                        {{form.email}}
+                     </p>
+                     <p>
+                        <img src="{{MEDIA_URL}}img/contact_feedback_file_bg.png" alt="" />Прикрепить файл:<br />
+                            <p id="contact_file_img" class="round">
+							{{form.file1}}
+							</p>
+                     </p><br />  
+                     <p><img src="{{MEDIA_URL}}img/contact_feedback_comment_bg.png" class="feedback_comment_bg" alt="" />Комментарий:</p>
+                     {{form.message}}<br />
+                     <input type="submit" value="" id="contact_submit" class="sendsubmit round"/>
+                </form>
+        </div>
+        <div class="clear"></div>
+        <div class="contact_map">
+            <h3>Карта</h3>
+        </div>
+		<div class="clear" style="padding-top:20px;"></div>
+    </div>
+{% endblock %}

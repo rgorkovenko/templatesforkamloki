@@ -1,0 +1,43 @@
+{%  extends "base.html" %}
+{% load thumbnail %}
+{% block title %}Отзывы{% endblock %}
+
+{%block slider%}
+  <img src="/media/images/reports.png">
+{%endblock%}
+{%block content%}
+<script type="text/javascript">
+$(function() {
+  $('.otzivi a').lightBox();
+ });
+</script>
+<div class="pathway"><a href="/">Главная</a> \ Отзывы</div> 
+<h1>Отзывы наших клиентов</h1>
+  {%for n in  otzivi%}
+      <div class="otzivi">
+        {% thumbnail n.photo "100x100" crop="center" as im %}
+        <div class="image"><img border="0" src="{{ im.url }}" width="100" height="100"></div>
+        {% endthumbnail %}
+        <div class="otziv">
+          <div class="treug"><img src="/media/images/treug.png"></div>
+          {{n.content|safe}}
+          <div class="mt10">
+            <div class="original">
+                <img src="/media/images/original.png" align="top">
+               {% thumbnail n.image "480x640" crop="center" as im %} 
+                <a href="{{im.url}}">Оригинал письма</a>
+                {% endthumbnail %}
+            </div>   
+            <div class="fio">
+              <i>
+                <b>{{n.fio}}</b>
+                <br>{{n.name}}
+                <br>{{n.pub_date}}
+              </i>
+            </div>
+           </div>
+        </div>       
+      </div>
+      <div class="clear"></div>
+  {%endfor%}
+{%endblock%}

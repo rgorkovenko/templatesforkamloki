@@ -1,0 +1,182 @@
+{% load tree_menu_tags %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<link media="screen, projection" type="text/css" href="/media/css/font-ie.css" rel="stylesheet">
+
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="no-cache" http-equiv="Cache-Control">
+<title>{% block title %}Главная{% endblock %}</title>
+<meta name="keywords" content="{% block metakey %}{% endblock %}" />
+<meta name="description" content="{% block metades %}{% endblock %}" />
+                                      
+<link media="screen, projection" type="text/css" href="/media/css/style.css" rel="stylesheet">
+<link type="text/css" href="/media/css/validationEngine.jquery.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/media/css/jquery.lightbox-0.5.css" media="screen" />
+{%if not simple_page%}
+<style type="text/css">
+  .content{min-height:500px;}
+</style>
+{%endif%}
+<!--[if lte IE 7]>  
+     <link media="screen, projection" type="text/css" href="/media/css/ie-7.css" rel="stylesheet"> 
+<![endif]-->
+<!--[if gt IE 7]>  
+     <link media="screen, projection" type="text/css" href="/media/css/ie.css" rel="stylesheet"> 
+<![endif]-->
+
+<script charset="utf-8" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+{%if simple_page%}
+<script charset="utf-8" type="text/javascript" src="/media/js/tmslider.js"></script>
+<script charset="utf-8" type="text/javascript" src="/media/js/tms_present.js"></script>
+{%endif%}
+<script charset="utf-8" type="text/javascript" src="/media/js/jquery.form.js"></script>
+<script charset="utf-8" type="text/javascript" src="/media/js/jquery.validationEngine.js"></script>
+<script charset="utf-8" type="text/javascript" src="/media/js/languages/jquery.validationEngine-ru.js"></script>
+<script type="text/javascript" src="/media/js/jquery.lightbox-0.5.min.js"></script>
+
+<script  type="text/javascript">
+jQuery(document).ready(function(){
+    jQuery("#forma").validationEngine({scroll: false});
+    
+    show=false;
+    $('.svyaz').click(function(){
+       if (show) { 
+        $('#forma').validationEngine('hide');
+         $('.forma').animate({left:-562},500); 
+        show=false;
+       }
+       else{
+          $('.forma').css('top',$(window).scrollTop()+$(window).height()/2-270);
+         $('.forma').animate({left:$(window).width()/2-275},500);
+         show=true;
+       } 
+    });
+   $('.imgx').click(function(){
+       if (show)
+       { 
+        $('#forma').validationEngine('hide');
+         $('.forma').animate({left:-562},500); 
+        show=false;
+       }
+       else{
+          $('.forma').css('top',$(window).scrollTop()+$(window).height()/2-270);                
+         $('.forma').animate({left:$(window).width()/2-275},500);
+         show=true;
+       } 
+    });
+    
+   var options = { 
+        target:        '.inner2',
+        success:       showResponse,
+        beforeSubmit:  showRequest,
+        url: '/ajaxsubmit/',
+        clearForm: true,
+        resetForm: true   
+   } 
+    $('#forma').submit(function() { 
+      
+      if ($("#forma").validationEngine('validate')) $(this).ajaxSubmit(options); 
+      return false; 
+    });  
+    function showResponse(responseText, statusText, xhr, $form)  {
+        $('#ajaxload').hide();
+       alert('Спасибо, Ваше сообщение принято!');
+       $('.forma').animate({left:-562},500);        
+       show=false;
+    }
+    function showRequest(formData, jqForm, options) {
+      $('#ajaxload').css('top',$(window).scrollTop()+$(window).height()/2-16);
+      $('#ajaxload').css('left',$(window).width()/2-16);
+      $('#ajaxload').show(); 
+      return true; 
+}           
+}); 
+</script>
+
+</head>
+<body>
+<div class="bar"> </div>
+<div class="svyaz">
+    Связаться с нами
+</div>
+<div id="ajaxload"><img src="/media/images/ajax-loader.gif"></div>
+<div class="forma">
+  <div class="inner">
+    <div class="top2">
+      <h2>Обратная связь</h2>
+      <img class="imgx" src="/media/images/x.png">
+    </div>
+    <div class="inner2">
+      Оставьте нам сообщение, и мы ответим Вам в ближайшее время!
+      <form id="forma" method="post">
+      {% csrf_token %}
+      <div class="line">
+        <div class="label">Имя: *</div>
+        <input type="text" id="name" class="field validate[required]" name="name">
+      </div>
+      <div class="line">
+        <div class="label">Компания: *</div>
+        <input type="text" id="company" class="field validate[required]" name="company">
+      </div>
+      <div class="line">
+        <div class="label">E-mail: *</div>
+        <input type="text" id="email" name="email" class="field validate[required,custom[email]]">
+      </div>
+      <div class="line">
+        <div class="label">Сообщение: *</div>        
+        <textarea id="message" class="field2 validate[required]" name="message" style="resize:none;"></textarea>
+      </div>
+      <div class="line">
+        <div class="label">Прикрепить файл:</div>
+        <input type="file"  name="file1">
+      </div>
+       <div class="line">
+        <div class="label2">* Обязательные поля</div>       
+        <input type="image" align="right" class='field3' src="/media/images/submit.png"></>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class=main>
+  <div class="top">
+    <div class="fl"><a href="/"><img src="/media/images/logo.png" align="left" class="mr30"></a></div>
+    <div class="text">
+      <a href="/aboute/">Компания Машпром</a> - осуществляет изготовление и ремонт навесного<br>
+       оборудования для Строительно-Дорожной Техники.
+    </div>
+    <div class="vr"><img src="/media/images/greypiksel.png" class="mr30"></div>
+    <div class="tel cuprum">
+      <span class="blue">(343)</span> 307-66-36<br>
+      <span class="blue">(343)</span> 307-66-86
+    </div>    
+  </div>
+  
+  {% show_menu "TopMenu" "top_menu" %}
+  <div class="clear"></div>
+  <div class="slider">  
+  {%block slider%}
+
+  {%endblock%}
+  </div>  
+  <div class="clear"></div>
+  <div class="content">
+  {%block content%}
+
+  
+  {%endblock%}
+  </div>
+</div>
+<div class="clear"></div>
+<div class="footer">
+  <div class="container">
+
+    {% show_menu "BottomMenu" "bottom_menu" %}
+    <div class="copy">
+      © ЗАО &laquo;НПП Машпром&raquo; 1996-2012
+    </div>
+  </div>
+</div>
+</body>
+</html>

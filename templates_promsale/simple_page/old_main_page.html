@@ -1,0 +1,180 @@
+{%  extends "base.html" %}
+{%load thumbnail%}
+{% load catalog_tags %}
+{% block title %}{{ simple_page.title_seo|default:simple_page.title }}{% endblock %}
+{% block metakey %}{{ simple_page.metakey }}{% endblock %}
+{% block metades %}{{ simple_page.metades }}{% endblock %}
+  
+  {%block content%}
+  
+<div class="box-slider">
+		<div class="moduletable_slider">
+		<div class="nivoSlider" id="slider">
+    {%for n in slides%}
+			{% thumbnail n.image "898x357" crop="center" as im %}
+      <a class="nivo-imageLink" href="{{n.url}}"><img src="{{im.url}}" alt="{{n.title}}" border="0"></a>		
+      {%endthumbnail%}
+  {%endfor%}
+</div>
+</div>
+	
+			</div>
+			<div class="main">
+		<div id="content">	
+				<div class="wrapper">
+															<!--div id="right">
+						<div class="wrapper">
+							<div class="extra-indent">
+										<div class="module_LoginForm">
+			
+										 <div class="boxIndent">
+						<div class="wrapper">
+							
+<form action="/virtuemart_35285/index.php" method="post" name="login" class="form-login">
+		<div class="part1">
+		<div class="wrapper">
+			<div class="username">
+					<span>					User Name</span>
+				<input name="username" id="mod_login_username" class="inputbox" onblur="if(this.value=='') this.value=''" onfocus="if(this.value =='' ) this.value=''" alt="" type="text">
+			</div>
+			<div class="password">
+				<span>					Password</span>
+				<input id="mod_login_password" name="passwd" class="inputbox" value="" onblur="if(this.value=='') this.value=''" alt="" onfocus="if(this.value =='' ) this.value=''" type="password">
+			</div>
+				<div id="inputs">
+				<div class="rememberCheck">
+					<input name="remember" id="mod_login_remember" class="checkbox" value="yes" alt="Remember Me" type="checkbox">
+					<label for="mod_login_remember" class="remember">
+						Remember Me					</label>
+				</div>
+			</div>
+			<input name="Submit" class="button" value="Log in" type="submit">
+									<a class="reg" href="http://livedemo00.template-help.com/virtuemart_35285/index.php?option=com_user&amp;task=register#content">
+						Create an account</a>
+					
+				<div id="form-login-remember">
+					<a href="http://livedemo00.template-help.com/virtuemart_35285/index.php?option=com_user&amp;view=reset#content">
+						Forgot your password?</a>
+															</div>
+		</div>
+	</div>
+		<input name="option" value="com_user" type="hidden">
+	<input name="task" value="login" type="hidden">
+	<input name="return" value="L3ZpcnR1ZW1hcnRfMzUyODUvI2NvbnRlbnQ=" type="hidden">
+	<input name="f5ebaae22ad3d8ab4f8aba6fab891d34" value="1" type="hidden"></form>
+						</div>
+					</div>
+				
+		</div>
+		
+	
+							</div>
+						</div>
+					</div-->
+										<div class="container">
+																			<div class="module_multi">
+			
+											<h3><span>Новинк</span></h3>
+										 <div class="boxIndent">
+						<div class="wrapper">
+							<div class="tab-page" id="all_in_one4fa7ac1239405"><div style="width: auto;" id="ext-comp-1002" class="x-tab-panel"><div style="-moz-user-select: none;" id="ext-gen15" class="x-tab-panel-header x-unselectable"><div id="ext-gen19" class="x-tab-strip-wrap"><ul id="ext-gen21" class="x-tab-strip x-tab-strip-top"><li class=" x-tab-strip-active" id="ext-comp-1002__ext-comp-1003"><a class="x-tab-strip-close" onclick="return false;"></a><a class="x-tab-right" href="#" onclick="return false;"><em class="x-tab-left"><span class="x-tab-strip-inner"><span class="x-tab-strip-text ">New Arrival</span></span></em></a></li><li id="ext-gen22" class="x-tab-edge"></li><div id="ext-gen23" class="x-clear"></div></ul></div><div id="ext-gen20" class="x-tab-strip-spacer"></div></div><div id="ext-gen16" class="x-tab-panel-bwrap"><div style="overflow: auto; width: auto;" id="ext-gen17" class="x-tab-panel-body x-tab-panel-body-top"><div style="width: 718px;" id="ext-comp-1003" class="x-panel x-panel-noborder "><div id="ext-gen26" class="x-panel-bwrap"><div style="height: auto; width: 718px;" id="ext-gen27" class="x-panel-body x-panel-body-noheader x-panel-body-noborder"><div class="tab-page" id="new_all_in_one4fa7ac1239405">      <table border="0" cellpadding="0" cellspacing="0" width="100%">       
+  <tbody><tr>
+{%for n in products%}
+<td align="center"><div class="featuredIndent">
+
+	<div class="border-product">
+	<!-- The product image DIV. -->
+	<div class="product_image_container"> 
+		<a title="{{n.title}}" href="{% url tovar_inside n.category.slug_title n.slug_title %}">
+			{% thumbnail n.image "220x224" crop="center" as im %}
+      <img src="{{im.url}}" alt="{{n.title}}" border="0">		
+      {%endthumbnail%}
+      </a> 
+	</div>
+	<!-- The product name DIV. -->
+				<div class="product_name">
+			<a class="product_name" title="{{n.title}}" href="{% url tovar_inside n.category.slug_title n.slug_title %}">{{n.title}}</a>
+		</div>
+				<!-- END The product name DIV. -->
+	<!-- END The product image DIV. -->
+		<div class="product-options">
+			<!-- The product price DIV. -->
+	<div class="box_product_price">	<span class="productPrice">
+		{{n.price|format1000}} руб.</span>
+	{%if n.oldprice%}
+  <span class="product-Old-Price" style="text-decoration:line-through;">
+		{{n.oldprice|format1000}} руб.</span>
+	{%endif%}
+ </div>
+			<!-- END The product price DIV. -->
+
+				<!-- The product details DIV. -->
+				<!--div class="product_details_container">
+					<a class="details" title="Lorem ipsum dolor sit amet, consectetur" href="http://livedemo00.template-help.com/virtuemart_35285/index.php?page=shop.product_details&amp;category_id=13&amp;flypage=flypage.tpl&amp;product_id=80&amp;option=com_virtuemart&amp;Itemid=29">Details</a>
+				</div-->
+				<!-- END The product details DIV. -->
+				
+				<!-- The add to cart DIV. -->
+			<div class="product_buttons">
+   						<a class="addtocart_button" title="Добавить в корзину" href="cart/add/{{n.id}}/1/"></a>
+   				</div>
+								<!-- END The add to cart DIV. -->
+				
+		</div>
+		
+		<!-- The product Description DIV. -->
+				<!-- END The product Description DIV. -->
+	</div>
+  
+  	
+</div><!--div class="discount">7$</div--></td>
+{%endfor%}
+
+</tr>
+<tr>
+</tr>
+  </tbody></table>
+  </div></div></div></div></div></div></div></div>
+  
+  <script type="text/javascript">
+/*
+	tabinit_all_in_one4fa7ac123903b = function() {
+	Ext.QuickTips.init();
+	var state = Ext.state.Manager;
+	var tabs_all_in_one4fa7ac123903b = new Ext.TabPanel({
+		renderTo: 'all_in_one4fa7ac1239405',
+		activeTab: 0,
+		deferredRender: false,
+		enableTabScroll: true,
+		autoScroll: true,
+		 listeners : {
+		    'beforerender' : {
+		        fn: function() { $$('textarea.mce_editable').each(function(elem) { if(tinyMCE.get(elem.id)) tinyMCE.execCommand('mceRemoveControl',false,elem.id);}) }
+		    },
+		    'afterrender' : {
+		        fn: function() { $$('textarea.mce_editable').each(function(elem) { tinyMCE.execCommand('mceAddControl',false,elem.id);}) },
+		        scope: this
+		    }
+		},
+		autoWidth: true,
+		items: [{ autoHeight: true, contentEl: 'new_all_in_one4fa7ac1239405', title: 'New Arrival' , tabTip: 'New Arrival' }]
+		});tabs_all_in_one4fa7ac123903b.activate( 'new_all_in_one4fa7ac1239405'); };
+	if( Ext.isIE6 || Ext.isIE7 ) {
+	Ext.EventManager.addListener( window, 'load', tabinit_all_in_one4fa7ac123903b );
+}
+else {
+	Ext.onReady( tabinit_all_in_one4fa7ac123903b );
+} */
+	
+		
+</script>
+						</div>
+					</div>
+				
+		</div>
+		
+	
+									</div>
+			</div>
+		</div>
+  {%endblock%}

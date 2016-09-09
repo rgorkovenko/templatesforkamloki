@@ -1,0 +1,20 @@
+<div class="h2">Каталог</div>
+<ul class="leftmenu">
+    {% for cate in categ %}
+    <li {% if cat == cate or cat.get_root == cate %}class="current"{% endif %}><a href="{% url cat cate.slug_title %}">{{ cate.title }}</a>
+        
+        <ul>
+            {% for cate2 in cate.getchildrens %}
+            <li {% if cat == cate2 %}class="current_2"{% endif %}><a href="{% url cat cate2.slug_title %}">{{ cate2.title }}</a>
+		        <ul>
+		            {% for cate3 in cate2.getchildrens %}
+		            <li {% if cat == cate3 %}class="current_2"{% endif %}><a href="{% url cat cate3.slug_title %}">{{ cate3.title }}</a></li>
+		            {% endfor %}
+		        </ul>
+            </li>
+            {% endfor %}
+        </ul>
+    </li>
+    {% endfor %}
+
+</ul>

@@ -1,0 +1,338 @@
+{%  extends "category.html" %}
+{% load thumbnail %}
+{% load tree_menu_tags %}
+
+{% block title %}{{ item.title_seo|default:item.title }}{% endblock %}
+{% block metakey %}{{ item.metakey }}{% endblock %}
+{% block metades %}{{ item.metades }}{% endblock %}
+
+				{%block breadcrumbs%}
+				<div class="breadcrumbs"><!-- breadcrumbs block <li><em>-</em><a href="#">Мультимедиа. Графика. Дизайн</a></li> -->
+					<ul>
+						<li><em>-</em><a href="/">Главная</a></li>
+						<li><em>-</em><a href="{%url catalog%}">Каталог</a></li>
+						<li><em>-</em><a href="{%url cat item.category.slug_title %}">{{item.category.title}}</a></li>
+						<li class="active"><em>/</em><span>{{item.title}}</span></li>
+						
+					</ul>
+				</div><!-- breadcrumbs block end -->
+				{%endblock%}
+
+
+{% block left_menu%}
+
+
+<ul>
+				{%for r in root%}
+						<li {%if request.path|startswith:"/katalog/" and r.url == "/katalog/"%}class="active"{%endif%}><a href="{{r.url }}">{{r.caption}}{%if request.path|startswith:"/katalog/" and r.url == "/katalog/"%}<em></em>{%endif%}</a>
+						{%if r.url == "/katalog/" %}
+					  <div class="vMenuScroll2">
+						<div>                                                                                                                                                                 
+							 <ul> 
+								{%for cate in categ%}
+								<li class="{%if request.path|startswith:cate.slug_title or request.path|for_menu_item:cate %}active{%endif%}" ><a href="{%url cat cate.slug_title %}">{{cate.title}} <em></em></a>
+									
+								{%if request.path|startswith:cate.slug_title or request.path|for_menu_item:cate %}   
+                  {%if not cate.getchildrens %}
+  					       	<div class="vMenuScroll">
+  									<div>
+                  {%endif%}                
+								<ul>	
+								{%for ca in cate.getchildrens%}
+									<li class="{%if request.path|startswith:ca.slug_title%}active{%endif%}"><a href="{%url cat ca.slug_title%}">{{ca.title}}</a>
+  								
+                  {%if request.path|startswith:ca.slug_title %}		
+					       	<div class="vMenuScroll" >
+									<div>
+										<ul>	
+											{%for ca in cat3%}
+												<li class="{%if request.path|startswith:ca.slug_title%}active{%endif%}"><a {%if not request.path|startswith:ca.slug_title%}href="{%url item ca.category.slug_title ca.slug_title%}"{%endif%}>{{ca.title}}</a></li>
+											{%endfor%}
+										</ul>
+									</div>
+							</div>
+								{%endif%}
+                </li>
+							 {%endfor%}
+	
+										{%for ca in cate.gettovar%}
+											<li class="{%if request.path|startswith:ca.slug_title%}active{%endif%}"><a href="{%url item ca.category.slug_title ca.slug_title%}">{{ca.title}}</a></li>
+										{%endfor%}
+					</ul>
+                {%if not cate.getchildrens %}
+					       	</div>
+									</div>
+                {%endif%}             
+			    	{%endif%}  	
+								</li>
+              {% endfor %}
+						 	</ul>
+              </div>
+              </div>
+              </li>
+   
+							{%endif%}	
+							{%endfor%}
+</ul>
+							{%endblock%}
+
+
+{% block content_1 %}
+	<script type="text/javascript">
+ $(document).ready(function() {	
+	$(".item_group").fancybox({
+		"width": 640,
+		"height": 472,
+		'transitionIn'	: 'elastic',
+		'transitionOut'	: 'elastic',
+				'titleFormat'		: function(title, currentArray, currentIndex, currentOpts) {
+					return '<span id="fancybox-title-over" style="color:#fff;">Картинка ' + (currentIndex + 1) + ' / ' + currentArray.length + (title.length ? ' &nbsp; ' + title : '') + '</span>';
+				}
+			});
+				$("a#item_figure").fancybox({
+				'overlayShow'	: false,
+				'transitionIn'	: 'elastic',
+				'transitionOut'	: 'elastic',
+				'overlayShow': true
+			});		
+});
+	</script>
+					<div class="sideContent"><!-- content side block -->
+						<div class="bgGdsReview"><!-- goods review block -->
+							<h1 class="gdsTitle">{{item.title}}</h1>
+							<div class="columnLf">								
+								<div class="sliderkit slFour"><!-- four slider 238x182-->
+									<div class="sliderkit-panels">
+										<div class="sliderkit-btn sliderkit-go-btn sliderkit-go-prev"><a rel="nofollow" href="#" title="Previous"><span>Previous</span></a></div>
+										<div class="sliderkit-btn sliderkit-go-btn sliderkit-go-next"><a rel="nofollow" href="#" title="Next"><span>Next</span></a></div>
+
+										<div class="sliderkit-count sliderkit-count-items">
+											<span class="sliderkit-count-current"></span><span class="sliderkit-count-sep">/</span><span class="sliderkit-count-total"></span>
+										</div>
+										
+									{% thumbnail item.image "640x472" crop="center" as im %}    
+										<div class="sliderkit-panel">
+											<a rel="item_group" class="item_group" href="{{im.url}}" >
+											   {% thumbnail item.image "317x234" crop="center" as im2 %}
+                          <img src="{{im2.url}}" alt="{{item.title}}" />
+                         {%endthumbnail%} 
+                    </a>
+										</div>
+									{%endthumbnail%}
+									
+										{%for a in additional%}
+										<div class="sliderkit-panel">
+										{% thumbnail a.image "640x472" crop="center" as im %}    
+											<a rel="item_group" class="item_group" href="{{im.url}}">
+										  {% thumbnail a.image "317x234" crop="center" as im2 %}                          
+                          <img  src="{{im2.url}}" alt="{{item.title}}" />
+										  {%endthumbnail%}                           
+                      </a>
+										{%endthumbnail%}
+										</div>
+										{%endfor%}
+									</div>
+                  <br>
+                  <br>
+									<!--div class="gdsPrice">
+										<p><strong>Стоимость:</strong><span>{{item.price}}</span><em>руб.</em>{%if item.old_price%}<span><del>{{item.old_price}}</del></span>{%endif%}</p>
+									</div-->
+									<div class="sliderkit-nav">
+										<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-prev"><a rel="nofollow" href="#" title="Previous line"><span>Previous line</span></a></div>
+										<div class="sliderkit-btn sliderkit-nav-btn sliderkit-nav-next"><a rel="nofollow" href="#" title="Next line"><span>Next line</span></a></div>
+										
+										<div class="sliderkit-nav-clip">
+											<ul>
+											{% thumbnail item.image "68x46" crop="center" as im %}         
+											<li><img src="{{im.url}}" alt="{{item.title}}" /></li>
+											{%endthumbnail%}
+											
+												{%for a in additional%}
+													{% thumbnail a.image "68x46" crop="center" as im %}         
+														<li><a href="{{im.url}}" ><img  src="{{im.url}}" alt="{{item.title}}" /></a></li>
+													{%endthumbnail%}
+												{%endfor%}
+
+											</ul>
+										</div>
+									</div>
+									
+								</div><!-- four slider end-->
+							</div>
+							<div class="columnRt">
+							{% thumbnail item.figure "640x472" crop="center" as im %}         
+								<a href="{{im.url}}" id="item_figure">
+                    {% thumbnail item.figure "317x234" crop="center" as im2 %} 
+                      <img src="{{im2.url}}" alt="{{item.title}}" />
+                    {%endthumbnail%}
+                </a>
+							{%endthumbnail%}
+							</div>
+							
+						</div><!-- goods review block end-->
+
+			<!-- screen  -->
+		  {%if item.get_prices%}
+    	<table class="Characteristic">
+							<thead>
+								<tr class="item_thd">
+									<td></td>
+									<td>Розница</td>
+									<td>Оптовая</td>
+								</tr>
+							</thead>
+							<tbody>
+              {%for n in item.get_prices%}
+								<tr class="{%cycle grey,%}">
+									<td>{{n.price_category.title}}</td>
+									<td>{{n.price}} {%if n.price|is_digit%}руб.{%endif%}</td>
+									<td class="item_tr_bold">{{n.opt}} {%if n.price|is_digit%}руб.{%endif%}</td>
+								</tr>
+              {%endfor%}
+							</tbody>
+			</table>
+			{%endif%}			
+						<div class="tabsDual small"><!-- dual small tabs  -->
+							<div class="tabsDualHead">
+								<div>
+									<ul>
+										<li class="active"><span>Общее описание</span></li>
+										<li><span>Комментарии</span></li>
+									</ul>
+								</div>
+								<span class="line"></span>
+							</div>
+							
+							<ul class="tabsDualContent">
+								<li class="active">
+									<p>{{item.detail_desc|safe}}</p>
+								<div class="bGsdCharacteristic">
+									<table class="Characteristic">
+									<tbody>
+								{%for m in item.get_values%}
+									{%if m.values and m.values != "False" %}   
+									<tr class="{% cycle ,grey %}">									
+									<td class="td-char"><b>{{ m.schema.title }}</b>:</td>
+									<td>{% if m.schema.datatype == 'many' %}
+											<select>
+											{% for value in m.values %}
+												<option val="{{value}}">{{ value|default:"" }}</option>
+											{% endfor %}
+											</select>
+										{% else %}
+										{% if m.schema.datatype == 'choice'  %}
+											  {% for value in m.values %}
+												  {{ value|default:"" }}
+											  {% endfor %}                    
+										{% else %}
+											{% if m.schema.datatype == 'bool' %}
+												{% if m.values == "True" %}Да{% else %}Нет{% endif %}
+											{% else %}
+												{{ m.values|default:"" }}
+											{% endif %}
+										{% endif %}
+										{% endif %}</td>
+                  </tr> 
+								{% endif %}     
+							{% endfor %}
+
+                                  
+									</tbody>
+									</table>
+							</div>									
+								</li>
+								<li>
+								
+								{%for c in item.get_comment%}
+								<div class="comment" {%if forloop.last%}id1="{{c.id}}"{%endif%} style="display:block;" >
+								<p style="padding-bottom:20px;border-bottom:2px dashed #f1f1f1;">
+									<span style="color:blue;">{{c.name}} - {{c.date}}</span><br />
+									{{c.message}} <br /><br />
+									</p>
+								</div>	<br /><br />
+									{%endfor%}
+									 <div class="last-comments"></div>
+<div class="bForm" ><!-- form block  -->
+							
+							<p class="titleMedium"></p>
+							<div class="wrapFormContent" style="margin:0px auto;" >
+								<form action="" id="comment_form" enctype="multipart/form-data" method="post">{% csrf_token %}
+									<div class="bFormContent">
+										<div class="formLine">
+											<div class="wrapLab"><label for="l_phone">Email</label></div>
+											<input id="l_phone" class="fTxt" type="text" name="comemail"/>
+											<div  class="error" style="color:red;margin-bottom:5px;"></div>
+										</div>
+										<div class="formLine">
+											<div class="wrapLab"><label for="l_introduce">Представтесь</label></div>
+											<input id="l_introduce" class="fTxt" type="text" name="comname" />
+											<div  class="error" style="color:red;margin-bottom:5px;"></div>
+										</div>
+										<div class="formLine">
+											<div class="wrapLab"><label for="l_country">Комментарий</label></div>
+											<textarea id="l_description" class="fTxt" name="comment"></textarea>
+											<div  class="error" style="color:red;margin-bottom:5px;"></div>
+										</div>
+
+									</div>
+									<div class="formContentBottom">
+										<div class="btBlue"><span>Отправить</span><input type="submit" value="" /></div>
+									</div>
+								</form>
+							</div>
+							<div id="errmsg" style="color:#000; padding:10px;"></div>
+</div><!-- form block end -->
+
+								</li>
+							</ul>				
+						</div><!-- dual tabs small end-->
+						
+						
+						<div class="slThree"><!-- three slider  -->
+							<p class="titleMedium">Похожий товар</p>
+							<ul>
+								{%for s in similar%}
+								<li>
+									{% thumbnail s.image "68x46" crop="center" as im %}         
+									<a href="{%url item s.category.slug_title s.slug_title%}" class="bImg"><img src="{{im.url}}" alt="{{s.title}}" /></a>
+									{%endthumbnail%}
+									<div>
+										<p class="title"><a href="{%url item s.category.slug_title s.slug_title%}">{{s.title}}</a></p>
+										{%for m in s.get_values|slice:'3:4'%}
+																		{%if m.values and m.values != "False" %}
+																			<p>{{ m.schema.title }}:
+																			{% if m.schema.datatype == 'many' %}
+																		<select>
+																		{% for value in m.values %}
+																			<option val="{{value}}">{{ value|default:"" }}</option>
+																		{% endfor %}
+																		</select>
+																	{% else %}
+																	{% if m.schema.datatype == 'choice'  %}
+																		  {% for value in m.values %}
+																			  {{ value|default:"" }}
+																		  {% endfor %}                    
+																	{% else %}
+																		{% if m.schema.datatype == 'bool' %}
+																			{% if m.values == "True" %}Да{% else %}Нет{% endif %}
+																		{% else %}
+																			{{ m.values|default:"" }}
+																		{% endif %}
+																	{% endif %}
+																	{% endif %}
+															</p>
+															{% endif %}  
+															{%endfor%}
+
+									</div>
+								</li>
+								{%endfor%}
+							</ul>
+						</div><!-- three slider end -->
+						
+						
+					</div><!-- content side block -->
+
+				
+				
+{% endblock %}		

@@ -1,0 +1,19 @@
+{%  extends "base_1.html" %}
+{% load tree_menu_tags %}
+{% block title %}{{ flatpage.metatitle|default:flatpage.title }}{% endblock %}
+{% block metakey %}{{ flatpage.metakey }}{% endblock %}
+{% block metades %}{{ flatpage.metades }}{% endblock %}
+
+{%block breadcrumbs%}
+				<div class="breadcrumbs"><!-- breadcrumbs block <li><em>-</em><a href="#">Мультимедиа. Графика. Дизайн</a></li> -->
+					<ul>
+						<li><em>-</em><a href="/">Главная</a></li>
+            {%if parent_flatpage%} <li><em>-</em><a href="{{ parent_flatpage.url }}">{{ parent_flatpage.caption }}</a></li>{%endif%}
+						<li class="active"><em>/</em><span>{{flatpage.title}}</span></li>
+						
+					</ul>
+				</div><!-- breadcrumbs block end -->
+{%endblock%}
+{% block content_1 %}
+ {{flatpage.content|safe}}
+{%endblock%}

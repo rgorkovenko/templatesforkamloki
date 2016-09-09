@@ -1,0 +1,61 @@
+{%  extends "base.html" %}
+{% load thumbnail %}
+{% load pagination_tags %}
+
+
+{% block title %}Статьи{% endblock %}
+{% block metakey %}список статей{% endblock %}
+{% block metades %}список статей{% endblock %}
+                   
+
+
+{% block breadcrumbs %}
+        <div class="breadcrunbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+            <div class="inn">
+				<div class="brleft" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="/"><span itemprop="name">Главная</span><meta itemprop="position" content="1" /></a></div> > <span>Статьи</span>
+            </div>
+        </div>
+{% endblock %}    
+
+
+{% block content %}
+
+        <div class="main">
+            <div class="inn">
+                <div class="mar">
+                    <div class="left">
+                        {% include "left_menu.html" %}
+
+                    </div>
+                    <div class="right">
+                        <div class="content">
+                            <h1>Статьи</h1>
+                            <div class="article_list">
+
+                                {% autopaginate article 10 %}
+
+                                {% for n in article %}
+                                <div class="article_item">
+                                    <img class="article_img" 
+                                    {% thumbnail n.image "190x190" crop="center" as im %}
+                                      src="{{ im.url }}" width="190px">
+                                    {% endthumbnail %}
+                                    <h3><a href="{% url article_inside n.slug_title %}">{{ n.title }}</a></h3>
+                                    <p>{{ n.preview|safe }}</p>
+                                    <a class="more" href="{% url article_inside n.slug_title %}">Подробнее</a>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            
+                            {% paginate %}
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="clr"></div>
+            </div>
+        </div>
+
+{% endblock %}

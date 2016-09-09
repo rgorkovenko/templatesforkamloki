@@ -1,0 +1,22 @@
+{%  extends "base.html" %}
+{%load thumbnail%}
+{% block title %}{{ first_art.metatitle|default:first_art.title }}{% endblock %}
+{% block metakey %}{{ first_art.metakey }}{% endblock %}
+{% block metades %}{{ first_art.metades }}{% endblock %}
+
+{%block slider%}
+   <img src="/media/images/hardox2.png">
+{%endblock%}
+
+{% block content %}
+<div class="pathway"><a href="/">Главная</a> \ Hardox</div> 
+  <h1>Что такое Hardox?</h1>
+  <div class="content2">
+   <div class="grey"><i>{{ first_art.title }}</i></div> 
+{{ first_art.content|safe }}
+  <div class="clear"></div>
+  {% thumbnail first_art.image "146x60" crop="center" as im %}
+        <img border="0" src="{{ im.url }}" width="146" height="60" />
+  {% endthumbnail %}  
+  </div>
+{% endblock %}

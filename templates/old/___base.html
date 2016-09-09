@@ -1,0 +1,77 @@
+{% load tree_menu_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="{% block metades %}{% endblock %}" />
+	<meta name="keywords" content="{% block metakey %}{% endblock %}">
+		<title>{% block title %}Главная{% endblock %}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="/media/css/styles.css" type="text/css" media="screen" />
+		<script type="text/javascript" src="/media/js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="/media/js/js.js"></script>
+		<script type="text/javascript" src="/media/js/jquery.filestyle.js"></script>
+		<script type="text/javascript" src="/media/js/all_wigets.js"></script>
+		<script type="text/javascript" src="/media/js/jquery.form.js"></script>
+</head>	
+<body>
+<!-- ########################HEADER############################################################# -->
+<div class="container header_bg">
+		<div class="wrap">				
+			<div class="header">
+				<div class="header_logo">
+						<a href="/"><img src="{{MEDIA_URL}}{{settings.image}}"></a>
+						<p>{{settings.slogan}}</p>
+				</div>
+					<div class="header_search">
+							<form name="forma" id="forma" action="/search/" method="get">
+								<input name="q" type="text" maxlength="100" class="round" placeholder="Поиск по сайту..." /><br />																																										
+								<input type="submit" value="" id="header_submit" class="sendsubmit" />
+							</form>
+					</div>
+					
+					<div class="header_contact">
+						<p class="header_contact_phone">Телефон:</p>
+						<p class="clear">+7 (343) <span>{{settings.tel}}</span></p>
+						<p>+7 (343) <span>{{settings.tel_2}}</span></p>
+						<a href="#">Обратный звонок</a>
+					</div>
+					<div class="clear"></div>
+					<div class="header_nav round gradient box_shadow">
+						{% show_menu "TopMenu" "top_menu" %}
+					</div>
+			</div>
+		</div>
+</div>
+<!-- ########################Main################################################################ -->	
+<div class="container main_bg">
+		<div class="wrap">				
+				
+					{% block content %}{% endblock %}
+				
+		</div>
+</div>				
+<div class="clear"></div>
+<!-- ########################Footer############################################################### -->
+<div class="footer_shadow">	
+			<div class="container footer_bg">
+				<div class="wrap">				
+					<div class="footer">
+						<div class="copyright">
+												<span>{{settings.title|safe}}</span>
+												<p>{{settings.contact|safe}}
+												E-mail:{{settings.email|safe}}</p>
+						</div>
+						
+						<div class="mdstudio">
+												Разработка<br />
+												дизайна:
+												<a href="#"><img src="{{MEDIA_URL}}img/footer_mdstudio.png" alt="" /></a>
+						</div>
+					</div>
+				</div>
+			</div>
+</div>
+{{settings.metrik|safe}}
+</body>
+</html>			

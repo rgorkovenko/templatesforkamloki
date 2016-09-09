@@ -1,0 +1,17 @@
+{%  extends "base.html" %}
+{% block content %}
+<div class="services_recall round">
+{% for r in recalls %}
+<p style="border-bottom:3px dashed #ccc; padding:20px 0;">
+										
+											{{r.name|safe}}<br />
+												{{r.content|safe}}<br />
+													{{r.fio|safe}}<br />
+											
+</p>	
+{%endfor%}										
+										 <img src="{{MEDIA_URL}}img/services_recall_arrow.png" alt="" />
+</div>
+<div class="123" style="padding:25px 0"></div>
+
+{% endblock %}									 

@@ -1,0 +1,32 @@
+{% load pytils_numeral %}
+{% load catalog_tags %}
+
+<div class="cart">
+    <div class="cart_title">{% include "cart/nano.html" %}</div>
+</div>
+<div class="full_cart">
+    <form>
+        <table class="full_cart_table">
+            <tr>
+                <th></th>
+                <th class="name">Наименование товара</th>
+                <th width="100">Количество</th>
+                <th>Цена, руб.</th>
+                <th>Сумма, руб.</th>
+                <th>Удалить</th>
+            </tr>
+            {% for n in cart %}
+            <tr>
+                <td class="number">{{ forloop.counter }}</td>
+                <td class="name"><a href="{% url item  n.product.category.slug_title  n.product.slug_title %}">{{ n.product.title }}</a></td>
+                <td class="quantity"><span class="plus"></span>
+                    <input class="quantity nano" value="{{ n.quantity }}" data-tid="{{ n.product.pk }}"><span class="minus"></span></td>
+                <td class="price">{{ n.unit_price }}</td>
+                <td class="summa">{{ n.total_price }}</td>
+                <td class="del"><span class="delete nano" data-tid="{{ n.product.pk }}"></span></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="{% url cart_list %}" class="button">Оформить заказ</a>
+    </form>
+</div>

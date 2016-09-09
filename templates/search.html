@@ -1,0 +1,55 @@
+{%  extends "base.html" %}
+{% block title %}Поиск{% endblock %}
+{% block metakey %}{% endblock %}
+{% block metades %}{% endblock %}
+
+{%block breadcrumbs%}
+        <div class="breadcrunbs">
+            <div class="inn">
+                <a href="/">Главная</a> >
+                <span>поиск по сайту: {{query}}</span>
+            </div>
+        </div>
+{%endblock%}
+
+{% block content %}
+        <div class="main">
+            <div class="inn">
+                <div class="mar">
+                    <div class="left">                      
+                        {% include "left_menu.html" %}
+
+                    </div>
+                    <div class="right">
+                        <div class="content">
+                            <h1>Вы искали: "{{ query }}"</h1>
+
+                            <div class="category_list">                  
+                                Результаты поиска:<br>
+                                {% if not good and not category and not news %}
+                                    ничего не нашлось
+                                {% endif %}
+                                
+                                {%for n in good%}
+                                    <a target="_blank" href="{% url item n.category.slug_title n.slug_title %}" style="color:#800000">{{n.title}}</a><br>
+                                {%endfor%}
+                                
+                                {% for n in category %}
+                                    <a target="_blank" href="{%url cat  n.slug_title%}" style="color:#000080">{{n.title}}</a><br>
+                                {%endfor%} 
+                                
+                                {% for n in news %}
+                                    <a target="_blank" href="{%url news_inside  n.slug_title%}" style="color:#000080">{{n.title}}</a><br>
+                                {% endfor %}    
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="clr"></div>
+            </div>
+        </div>
+				 
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% load tree_menu_tags %}
+{% ifequal menu_type "top_menu" %}
+
+    {% if menu_item.has_children %}
+        <li item-id="{{ forloop.counter }}"><a class="" href="{{ menu_item.url }}"><span>{{ menu_item.caption }}</span><em class="corner"></em></a></li>
+		<div class="mMenuSubItems">
+            <ul item-id="1">
+                {% for child in menu_item.children %}
+                    {% show_menu_item child %}
+                {% endfor %}
+            </ul>
+        
+		</div>
+    {% endif %}
+{% endifequal %}
+
+						<div class="mMenuSubItems" style="display: block;">
+
+              {% for menu_item in menu.root_item.children %}
+              {% if menu_item.has_children %}
+                  <ul item-id="{{ forloop.counter }}">
+    								  {% for child in menu_item.children %}
+                          <li><a href='{{ child.url }}'>{{ child.caption }}</a></li>
+                      {% endfor %}
+    							</ul>
+              {% endif %}    							
+              {% endfor %}
+
+							<div class="mMenuShadows"></div>
+						</div>
+	<!-- ######################################################################################## -->
+						
+								<ul>
+								{%for cat in categ%}
+								<li class="{%if request.path|startswith:cat.slug_title%}active{%endif%}" ><a href="{%url cat cat.slug_title %}">{{cat.title}} <em></em></a>
+									{%if cat.get_children%}     
+									<div class="vMenuScroll">
+									<div>
+									<ul>
+									{%for ca in cat.get_children%}
+										<li class="{%if request.path|startswith:ca.slug_title%}active{%endif%}"><a href="">{{ca.title}}</a></li>
+									{%endfor%}
+
+									</ul>
+									</div>
+									</div>	
+								</li>
+									{%endif%}
+
+								{% endfor %}
+								</ul>					

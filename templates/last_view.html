@@ -1,0 +1,46 @@
+{% load thumbnail %}
+
+{% if last_view %}
+<div class="latest">
+    <h3>Последние просмотренные товары</h3>
+    <div class="latest_slider">
+        <ul class="latest_ul">
+            {% for item in last_view  %}
+            <li>
+                <a href="{% url item item.category.slug_title item.slug_title %}">
+
+                    {% if item.image.width > item.image.height %}
+                        {% thumbnail item.image "150" crop="center" as im %}      
+                            <div class="image">
+							<img src="{{ im.url }}" >
+							</div>
+                        {% empty %}
+							<div class="image">						
+                            <img src="/static/kamlock/images/no-photo.jpg" >
+							</div>
+                        {% endthumbnail %}                    
+                    {% else %}
+                        {% thumbnail item.image "x150" crop="center" as im %}
+							<div class="image">
+                            <img src="{{ im.url }}" >
+							</div>
+                        {% empty %}
+							<div class="image">
+                            <img src="/static/kamlock/images/no-photo.jpg" >
+							</div>
+                        {% endthumbnail %}                     
+                    {% endif %}
+                    
+                    <span class="latest_name">{{ item.title }}</span> 
+                    <span class="latest_price">Цена: <span class="latest_int">
+                        {% if item.price == 1 %}по запросу{% else %}{{ item.price }}{% endif %}
+                    </span> &#8381;</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="latest_prev"></div>
+        <div class="latest_next"></div>
+    </div>
+</div>
+{% endif %}

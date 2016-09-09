@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% load thumbnail %}
+
+{% block title %}{{ settings.title_seo|default:settings.title }}{% endblock %}
+{% block metakey %}{{ settings.metakey }}{% endblock %}
+{% block metades %}{{ settings.metades }}{% endblock %}
+
+        {% block slider %}
+        <div class="categories_slider">
+            <div class="inn">
+                <div class="cat_slider">
+                    <div class="cat_slide_window">
+
+                        {%for s in slides%}
+                        <div class="slider_item">                            
+                            {% thumbnail s.image "1260x320"  crop="center"  as im %}
+                            <img src="{{ im.url }}">
+                            {% endthumbnail %}
+                            <!-- <div class="slider_item_content passive">
+                                <span class="slider_item_title">{{ s.title }}</span>
+                                <span class="slider_item_desc">{{ s.desc|safe }}<a class="more" href="{{ s.url }}">>>></a></span>
+                            </div> -->
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                    <ul id="categories_slider_nav"></ul>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+
+
+		{% block content %}
+		<div class="main">
+            <div class="inn">
+                <div class="mar">
+                    <div class="left">                    
+                        {% include "left_menu.html" %}
+
+                    </div>
+                    <div class="right">
+                        <div class="content">
+                            {{ settings.content|safe }}
+                        </div>
+
+                    </div>
+                </div>
+                <div class="clr"></div>
+            </div>
+        </div>
+        {% endblock %}
+
+        {% block profit %}
+        <div class="profit">
+            <div class="inn">
+                <div class="pro_slider">
+                    <div class="pro_sli">
+                        {% for i in income %}                        
+                            <div class="pro_item">
+                            <a href="{%url item i.good.category.slug_title i.good.slug_title %}">
+							<div class="image">
+							<img
+                    {% if  i.good.image.width >  i.good.image.height %}
+                        {% thumbnail i.good.image "230" crop="center" as im %}      
+                            src="{{ im.url }}"
+                        {% endthumbnail %}                    
+                    {% else %}
+                        {% thumbnail i.good.image "x230" crop="center" as im %}      
+                            src="{{ im.url }}"
+                        {% endthumbnail %}                     
+                    {% endif %}                                    
+                                    alt="{{ i.good.title }}">
+							</div>
+							<div class="title">
+							{{ i.good.title }}
+							</div>
+							</a>
+                            </div>
+                        {% endfor %}                        
+                    </div>
+                </div>
+                <div class="pro_nav" id="pro_next"></div>
+                <div class="pro_nav" id="pro_prev"></div>
+                <div class="line"></div>
+                <div class="mark"></div>
+            </div>
+        </div>
+        {% endblock %}

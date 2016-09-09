@@ -1,0 +1,125 @@
+{%  extends "base.html" %}
+{%load thumbnail%}
+{% load catalog_tags %}
+{% block title %}Корзина{% endblock %}
+{% block metakey %}{% endblock %}
+{% block metades %}{% endblock %}
+  
+
+
+{% block breadcrumbs %}
+        <div class="breadcrunbs">
+            <div class="inn">
+                <a href="/">Главная</a> > <span>Оформление заказа</span>
+            </div>
+        </div>
+{% endblock %}
+
+
+{%block content%}
+        <div class="main">
+            <div class="inn">
+                <div class="mar">
+                    <div class="cart_left">
+                        <h1>Оформление заказа</h1>
+                        <form>
+                            <table class="full_cart_table">
+                                <tr>
+                                    <th></th>
+                                    <th class="name">Наименование товара</th>
+                                    <th>Ед. изм.</th>
+                                    <th width="100">Количество</th>
+                                    <th>Цена, руб.</th>
+                                    <th>Сумма, руб.</th>
+                                    <th>Удалить</th>
+                                </tr>
+                                {% for n in cart %}
+                                <tr>
+                                    <td class="number">{{ forloop.counter }}</td>
+                                    <td class="name"><a href="{% url item  n.product.category.slug_title  n.product.slug_title %}">{{ n.product.title }}</a></td>
+                                    <td class="measure">шт.</td>
+                                    <td class="quantity"><span class="plus"></span>
+                                        <input class="quantity" value="{{ n.quantity }}" data-tid="{{ n.product.pk }}"><span class="minus"></span></td>
+                                    <td class="price">{{ n.unit_price }}</td>
+                                    <td class="summa">{{ n.total_price }}</td>
+                                    <td class="del"><span class="delete" data-tid="{{ n.product.pk }}"></span></td>
+                                </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td class="itogo" colspan="5">Итого:</td>
+                                    <td class="itogo_summa" colspan="2">{{ cart.summ }}</td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+
+                    <div class="cart_right">
+                        <ul class="tab">
+                            <li id="f_1">Физ. лицо</li>
+                            <li id="f_2">Юр. лицо</li>
+                            <li id="f_3">ИП</li>
+                        </ul>
+                        <div class="order">
+                            <div class="tab_1">
+                                <form id="form1" action="#" method="post">{% csrf_token %}
+                                    <input type="text" name="f_1_name" placeholder="ФИО" required>
+                                    <div  class="error form_f_1_name" style="color:red;margin-bottom:5px;"></div>
+                                    <input type="text" name="f_1_mail" placeholder="Email" required>
+                                    <div  class="error form_f_1_mail" style="color:red;margin-bottom:5px;"></div>
+                                    <input type="text" name="f_1_phone" placeholder="Телефон" required>
+                                    <div  class="error form_f_1_phone" style="color:red;margin-bottom:5px;"></div>
+                                    <input type="text" name="f_1_adres" placeholder="Адрес доставки" required>
+                                    <div  class="error form_f_1_adres" style="color:red;margin-bottom:5px;"></div>
+                                    <input type="text" name="f_1_passport" placeholder="Паспортные данные *" required>
+                                    <div  class="error form_f_1_passport" style="color:red;margin-bottom:5px;"></div>
+									<p><i>* Необходимы для транспортной компании.</i></p>
+                                    <input type="submit" class="button" value="Подтвердить">
+                            	</form>
+                            </div>
+                            <div class="tab_2 active">
+                            	<form id="form2" enctype="multipart/form-data"  action="#" method="post">{% csrf_token %}
+	                                <input type="text" name="f_2_name" placeholder="Контактное лицо" required>
+	                                <div class="error form_f_2_name" style="color:red;margin-bottom:5px;"></div>
+	                                <input type="text" name="f_2_company" placeholder="Название компании" required>
+	                                <div class="error form_f_2_company" style="color:red;margin-bottom:5px;"></div>
+	                                <input type="text" name="f_2_inn" placeholder="ИНН" required>
+	                                <div class="error form_f_2_inn" style="color:red;margin-bottom:5px;"></div>
+	                                <input type="text" name="f_2_phone" placeholder="Телефон" required>
+	                                <div class="error form_f_2_phone" style="color:red;margin-bottom:5px;"></div>
+	                                <input type="text" name="f_2_mail" placeholder="Email" required>
+	                                <div class="error form_f_2_mail" style="color:red;margin-bottom:5px;"></div>
+	                                <input type="text" name="f_2_adres" placeholder="Адрес доставки" required>
+	                                <div class="error form_f_2_adres" style="color:red;margin-bottom:5px;"></div>
+                                    <input type="file" name="f_2_file" placeholder="Файл" required>
+                                    <div class="error form_f_2_file" style="color:red;margin-bottom:5px;"></div>
+									<p>&nbsp;</p>
+	                                <input type="submit" class="button" value="Подтвердить">
+                                </form>
+                            </div>
+                            <div class="tab_3">
+                            	<form id="form3" enctype="multipart/form-data"  action="#" method="post">{% csrf_token %}
+	                                <input type="text" name="f_3_name" placeholder="ФИО" required>
+	                                <div class="error form_f_3_name" style="color:red;margin-bottom:5px;"></div>
+	                                <input type="text" name="f_3_inn" placeholder="ИНН" required>
+	                                <div class="error form_f_3_inn" style="color:red;margin-bottom:5px;"></div>
+	                                <input type="text" name="f_3_phone" placeholder="Телефон" required>
+	                                <div class="error form_f_3_phone" style="color:red;margin-bottom:5px;"></div>
+	                                <input type="text" name="f_3_mail" placeholder="Email" required>
+	                                <div class="error form_f_3_mail" style="color:red;margin-bottom:5px;"></div>
+	                                <input type="text" name="f_3_adres" placeholder="Адрес доставки" required>
+	                                <div class="error form_f_3_adres" style="color:red;margin-bottom:5px;"></div>
+                                    <input type="file" name="f_3_file" placeholder="Файл" required>
+                                    <div class="error form_f_3_file" style="color:red;margin-bottom:5px;"></div>
+									<p>&nbsp;</p>
+	                                <input type="submit" class="button" value="Подтвердить">
+                                </form>
+                            </div>
+                                
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="clr"></div>
+        </div>
+{% endblock %}

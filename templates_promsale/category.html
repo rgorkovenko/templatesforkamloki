@@ -1,0 +1,249 @@
+{%  extends "base_1.html" %}
+{% load thumbnail %}
+{% load tree_menu_tags %}
+{% block title %}{{ cat.title_seo|default:cat.title }}{% endblock %}
+{% block metakey %}{{ cat.metakey }}{% endblock %}
+{% block metades %}{{ cat.metades }}{% endblock %}
+
+				{%block breadcrumbs%}
+				<div class="breadcrumbs"><!-- breadcrumbs block <li><em>-</em><a href="#">Мультимедиа. Графика. Дизайн</a></li> -->
+					<ul>
+						<li><em>-</em><a href="/">Главная</a></li>
+						<li><em>-</em><a href="{%url catalog%}">Каталог</a></li>		
+						{% with cat.get_parent as p %}{% if p %}<li><em>-</em><a href="{%url cat p.slug_title %}">{{ p.title }}</a></li>{% endif %}{% endwith %}
+						<li class="active"><em>/</em><span>{{cat.title}}</span></li>
+					</ul>
+				</div><!-- breadcrumbs block end -->
+{%endblock%}
+{% block left_menu%}
+
+
+<ul>
+				{%for r in root%}
+						<li {%if request.path|startswith:"/katalog/" and r.url == "/katalog/"%}class="active"{%endif%}><a href="{{r.url }}">{{r.caption}}{%if request.path|startswith:"/katalog/" and r.url == "/katalog/"%}<em></em>{%endif%}</a>
+						{%if r.url == "/katalog/" %}
+					  <div class="vMenuScroll2">
+						<div>                                                                                                                                                                 
+							 <ul> 
+								{%for cate in categ%}
+								<li class="{%if request.path|startswith:cate.slug_title or request.path|for_menu:cate %}active{%endif%}" ><a href="{%url cat cate.slug_title %}">{{cate.title}} <em></em></a>
+									
+								{%if request.path|startswith:cate.slug_title or request.path|for_menu:cate %}   
+								
+                {%if not cate.getchildrens %}
+					       	<div class="vMenuScroll">
+									<div>
+                {%endif%}
+								<ul>	
+              
+                
+                {%for ca in cate.getchildrens%}
+									<li class="{%if request.path|startswith:ca.slug_title%}active{%endif%}"><a href="{%url cat ca.slug_title%}">{{ca.title}}</a>
+  								
+                  {%if request.path|startswith:ca.slug_title %}		
+					       	<div class="vMenuScroll" >
+									<div>
+										<ul>	
+											{%for ca in cat3%}
+												<li class="{%if request.path|startswith:ca.slug_title%}active{%endif%}"><a href="{%url item ca.category.slug_title ca.slug_title%}">{{ca.title}}</a></li>
+											{%endfor%}
+										</ul>
+									</div>
+							</div>
+								{%endif%}
+                </li>
+							 {%endfor%}
+	
+										{%for ca in cate.gettovar%}
+											<li class="{%if request.path|startswith:ca.slug_title%}active{%endif%}"><a href="{%url item ca.category.slug_title ca.slug_title%}">{{ca.title}}</a></li>
+										{%endfor%}
+					   
+                </ul>
+                {%if not cate.getchildrens %}
+					       	</div>
+									</div>
+                {%endif%}               
+               										
+				    	{%endif%}  	
+								</li>
+							
+              {% endfor %}
+						 	</ul>
+              </div>
+              </div>
+              </li>
+   
+							{%endif%}	
+							{%endfor%}
+</ul>
+							{%endblock%}
+{% block content_1 %}
+
+
+         {%if cat.get_children%}
+					<div class="sideContent"><!-- content side block -->
+						<div class="bCatalog sortTabsWrap"><!-- catalog block, sorting tabs wrapper-->							
+							<form action="" >
+								<div class="catalogHead2">
+									<p class="titleMedium">{{cat.title}} - подкатегории</p>									
+									</div><!-- pagination end-->
+								</div>
+								<div class="catalogContent2">
+												<div class="bCatalogList2"><!-- catalog list block -->
+													<ul>
+													{%with cat as c %}
+													{%for c in c.get_children%}
+														<li>
+															<a href="{%url cat c.slug_title%}" class="bImg">
+													{% thumbnail c.image "68x46" crop="center" as im %}         
+														<img src="{{im.url}}" alt="{{c.title}}" />
+													{%endthumbnail%}
+															</a>
+															<div class="catalogItemCont">
+																<p class="name"><a href="{%url cat c.slug_title %}">{{c.title}}</a></p>
+																	{{c.technical_char|safe}}
+															</div>
+														</li>	
+													{%endfor%}
+														{%endwith%}
+													</ul>
+												</div><!-- catalog list block  -->
+								</div>
+							</form>
+						</div><!-- catalog block, sorting tabs wrapper end -->				
+			{% endif %} 
+      
+      				
+				<div class="sideContent"><!-- content side block -->
+					  {%if cat3%}
+						<div class="bCatalog sortTabsWrap"><!-- catalog block, sorting tabs wrapper-->							
+							<form action="" >
+								<div class="catalogHead">
+									<h1 class="titleMedium">{{cat.title}}</h1>									
+									<div class="sortTabsHead"><!-- sorting tabs head -->
+										<ul>
+											<li class="item1 active"></li>
+											<li class="item2"></li>
+											<li class="item3"></li>
+											<li class="item4"></li>
+										</ul>
+									</div><!-- sorting tabs head end-->
+									<div class="bPagination"><!-- pagination -->
+										<div>
+											<a href="#" class="first"></a>
+											<a href="#" class="prev"></a>
+											<input class="fTxt" type="text" value="" />
+											<a href="#" class="next"></a>
+											<a href="#" class="last"></a>
+										</div>
+									</div><!-- pagination end-->
+								</div>
+								<div class="catalogContent">
+									<div class="catalogScroll">
+										<div class="sortTabsContent"><!-- sorting tabs content-->
+											<div class="sTabsContItem active">
+												<div class="bCatalogList"><!-- catalog list block -->
+													<ul>
+													
+														{%for c in cat3%}
+														<li class="catim {%if c.check_attr%}with-tooltip{%endif%}">
+															<a href="{%url item  c.category.slug_title c.slug_title%}" class="bImg">
+													{% thumbnail c.image "68x46" crop="center" as im %}         
+														<img src="{{im.url}}" alt="{{c.title}}" />
+													{%endthumbnail%}
+															</a>
+															<div class="catalogItemCont">
+                                <div class="catalogItemContInfo">																	
+															  {%for m in c.get_two_values%}
+																		{%if m.values and m.values != "False" %}
+																			<p><strong>{{ m.schema.title }}:</strong>
+																			{% if m.schema.datatype == 'many' %}
+																		<select>
+																		{% for value in m.values %}
+																			<option val="{{value}}">{{ value|default:"" }}</option>
+																		{% endfor %}
+																		</select>
+																	{% else %}
+																	{% if m.schema.datatype == 'choice'  %}
+																		  {% for value in m.values %}
+																			  {{ value|default:"" }}
+																		  {% endfor %}                    
+																	{% else %}
+																		{% if m.schema.datatype == 'bool' %}
+																			{% if m.values == "True" %}Да{% else %}Нет{% endif %}
+																		{% else %}
+																			{{ m.values|default:"" }}
+																		{% endif %}
+																	{% endif %}
+																	{% endif %}
+															     </p>
+															{% endif %}  
+															{%endfor%}
+																</div>
+															<div class="catalogItemContTop">                               															
+																<p class="name"><a href="{%url item c.category.slug_title c.slug_title%}">{{c.title}}</a></p>
+																<p class="price">{{c.price}} р.</p>
+														  </div>
+																<div class="technical">	{{c.technical_char|safe}}</div>
+																<div class="description">{{c.desc|safe}}</div>
+																<div class="det_description">{{c.detail_desc|safe}}</div>
+													 </div> 		
+                              <div class="toolTipeCont">
+																<div>
+																		{%for m in c.get_values%}
+																		{%if m.values and m.values != "False" %}
+																			<p><strong>{{ m.schema.title }}:</strong>
+																			{% if m.schema.datatype == 'many' %}
+																		<select>
+																		{% for value in m.values %}
+																			<option val="{{value}}">{{ value|default:"" }}</option>
+																		{% endfor %}
+																		</select>
+																	{% else %}
+																	{% if m.schema.datatype == 'choice'  %}
+																		  {% for value in m.values %}
+																			  {{ value|default:"" }}
+																		  {% endfor %}                    
+																	{% else %}
+																		{% if m.schema.datatype == 'bool' %}
+																			{% if m.values == "True" %}Да{% else %}Нет{% endif %}
+																		{% else %}
+																			{{ m.values|default:"" }}
+																		{% endif %}
+																	{% endif %}
+																	{% endif %}
+															</p>
+															{% endif %}  
+															{%endfor%}
+																</div>
+															</div>
+														</li>														
+														{%endfor%}
+														
+													</ul>
+												</div><!-- catalog list block  -->
+											</div>
+										</div><!-- sorting tabs content end-->
+									</div>
+									<div class="catalogBottom">
+										<div class="bPagination"><!-- pagination -->
+											<div>
+												<a href="#" class="first"></a>
+												<a href="#" class="prev"></a>
+												<input class="fTxt" type="text" value="1" />
+												<a href="#" class="next"></a>
+												<a href="#" class="last"></a>
+											</div>
+										</div><!-- pagination end-->
+									</div>
+									<div class="blueBottom"></div>
+								</div>
+								
+							</form>
+						</div><!-- catalog block, sorting tabs wrapper end -->				
+	
+				   {%endif%} 
+          <div class="content" {%if not cat3%}style="margin-top:0px;"{%endif%}>{{ cat.content|safe }}</div>
+				</div><!-- content side block -->
+
+{% endblock %}		

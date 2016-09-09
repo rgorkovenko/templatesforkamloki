@@ -1,0 +1,494 @@
+{% load tree_menu_tags %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<title>{% block title %}Главная{% endblock %}</title>
+	<meta name="keywords" content="{% block metakey %}{% endblock %}" />
+	<meta name="description" content="{% block metades %}{% endblock %}" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<!--Main style-->	
+	<link rel="stylesheet" href="/media/css/style.css" type="text/css" media="screen, projection" />
+	<!-- Jquery -->
+	<script type="text/javascript" src="/media/js/jquery-1.7.2.min.js"></script>
+	
+	<!--UI-->	
+	<script type="text/javascript" src="/media/js/ui/jquery-ui-1.9.2.custom.min.js"></script>		
+	<!-- UI ToolTipe -->
+	<link rel="stylesheet" type="text/css" href="/media/css/jquery.ui.tooltipe.css" media="all"/>	
+	
+	<!-- jQuery Plugin scripts -->
+	<script type="text/javascript" src="/media/js/jquery.easing.1.3.min.js"></script>
+	<!-- the mousewheel plugin -->
+	<script type="text/javascript" src="/media/js/jquery.mousewheel.min.js"></script>
+	<script type="text/javascript" src="/media/js/jquery.form.js"></script>
+	
+	<!-- Slider Kit scripts -->
+	<link rel="stylesheet" href="/media/css/sliderkit-core.css" type="text/css" media="screen, projection" />
+	<script type="text/javascript" src="/media/js/jquery.sliderkit.1.9.2.pack.js"></script>		
+	
+	<!--Jcarusel-->
+	<link rel="stylesheet" href="/media/css/jcarusel.css" type="text/css" media="screen, projection" />
+	<script type="text/javascript" src="/media/js/jquery.jcarousel.js"></script>	
+	
+	<!-- jScrollPane  -->		
+	<link rel="stylesheet" href="/media/css/jquery.jscrollpane.css" type="text/css" media="screen, projection" />	
+	<link rel="stylesheet" href="/media/css/jquery.fancybox-1.3.4.css" type="text/css" media="screen, projection" />	
+	<script type="text/javascript" src="/media/js/jquery.jscrollpane.min.js"></script>
+	<script type="text/javascript" src="/media/js/jquery.fancybox-1.3.4.js"></script>
+  
+	<!--Function-->	
+	<script type="text/javascript" src="/media/js/function.js"></script>	
+	
+	<!--[if lte IE 8]><link rel="stylesheet" href="css/style_ie8.css" type="text/css" media="screen, projection" /><![endif]-->
+	<!--[if lte IE 7]><link rel="stylesheet" href="css/style_ie7.css" type="text/css" media="screen, projection" /><![endif]-->	
+	<link href="/media/favicon.ico" type="image/x-icon" rel="icon" />
+	<link href="/media/favicon.ico" type="image/x-icon" rel="shortcut icon" />
+
+  {%if request.path = '/o-kompanii/'%}
+    <style>
+       .mMenuItems li#first.active .corner {display:block;}    
+    </style>
+  {%endif%}
+
+</head>
+
+<body>
+<script type="text/javascript">
+ $(document).ready(function(){
+							   var senddata = { 
+									url: '{%url comment item.id%}',
+									dataType:  'json', 
+									success:   processJsondata,
+									beforeSubmit: beforeForm
+									}; 
+							
+              	$('#comment_form').ajaxForm(senddata);
+								
+								function beforeForm() {
+									//$('#ajaxload').css('top',$(window).scrollTop()+$(window).height()/2-16);
+									//$('#forgif').show();
+								  $('div.error').fadeOut();
+									//$('#captha_err').fadeOut(); 
+									//$('#emsg').fadeOut('slow');  
+									$('.fTxt').attr("disabled","disabled");
+									
+									return true;
+								}
+								
+								function processJsondata(data) {
+									//$('#forgif').hide();
+									$('.fTxt').removeAttr('disabled');
+									if (data) {
+										e_msg = "";
+											if (!eval(data.valid)) {
+												errors = eval(data.errs);
+												$.each(errors,function(fieldname,errmsg)
+												{
+													if (fieldname == "__all__")
+											{
+    											  e_msg+=errmsg;
+                            $('#errmsg').html(e_msg).fadeIn("slow");  
+											}
+											else
+											{
+											  id = "[name='"+fieldname+"']";
+													   $(id).parent().find(".error").html( errmsg ).fadeIn();
+											}
+												});
+											}
+										else if (eval(data.valid)){
+                      $('#comment_form input[type="text"], #comment_form textarea').val("");
+											flag=false;
+											selected = 0;
+                      
+                      
+                       if ( $('div.comment:last').length ) {
+											     var last_comment_id=$('div.comment:last').attr('id1');
+    											 $('div.last-comments').last().load('/goods/load-comment/{{item.id}}/'+last_comment_id+'/');
+		    									 $('<div class="last-comments"></div>').insertAfter('div.last-comments:last');
+                      } 
+                      else {
+    											 $('div.last-comments').last().load('/goods/load-comment/{{item.id}}/1/');
+		    									 $('<div class="last-comments"></div>').insertAfter('div.last-comments:last');                      
+                      } 
+										} 
+
+											} else {
+												$('#emsg').text("Ajax error: no data received.").fadeIn("slow");
+											} 
+											}               
+										  });                                               
+</script>
+<script type="text/javascript">
+ $(function() {
+     $('.call_me').click(function(){  
+         $('#overlay').fadeIn('fast',function(){ 
+			 $('#call_on_me').css('left',$(window).width()/2-$('#call_on_me').width()/2);
+             $('#call_on_me').animate({'top':'14%'},400);
+         });
+     });
+     $('.box-clos,.ffo').click(function(){ 
+         $('#call_on_me').animate({'top':'-800px'},400,function(){ 
+             $('#overlay').fadeOut('fast'); 
+         });
+     });
+
+ });
+ $(function() {
+     $('.send_order').click(function(){  
+         $('#overlay').fadeIn('fast',function(){ 
+			 $('#send_order').css('left',$(window).width()/2-$('#send_order').width()/2);
+             $('#send_order').animate({'top':'14%'},400);
+         });
+     });
+     $('.box-clos,.ffo').click(function(){ 
+         $('#send_order').animate({'top':'-800px'},400,function(){ 
+             $('#overlay').fadeOut('fast'); 
+         });
+     });
+
+ });	
+						$('.sendsubmitt').live('click',function(){
+							   $(".bg2").hide("fast");
+							   $('.forma').hide();
+
+							});     
+							   var senddata = { 
+									url: '/form/',
+									dataType:  'json', 
+									success:   processJsondata,
+									beforeSubmit: beforeForm
+									}; 
+							
+              	$('#send_order_form').ajaxForm(senddata);
+								
+								function beforeForm() {
+									//$('#ajaxload').css('top',$(window).scrollTop()+$(window).height()/2-16);
+									//$('#forgif').show();
+								  $('div.error').fadeOut();
+									//$('#captha_err').fadeOut(); 
+									//$('#emsg').fadeOut('slow');  
+									$('.mono').attr("disabled","disabled");
+									
+									return true;
+								}
+								
+								function processJsondata(data) {
+									//$('#forgif').hide();
+									$('.mono').removeAttr('disabled');
+									if (data) {
+										e_msg = "";
+											if (!eval(data.valid)) {
+												errors = eval(data.errs);
+												$.each(errors,function(fieldname,errmsg)
+												{
+													if (fieldname == "__all__")
+											{
+    											  e_msg+=errmsg;
+                            $('#errmsg').html(e_msg).fadeIn("slow");  
+											}
+											else
+											{
+											  id = "[name='"+fieldname+"']";
+													   $(id).parent().find(".error").html( errmsg ).fadeIn();
+											}
+												});
+											}
+										else if (eval(data.valid)){
+										  $('.wrapFormContent').remove();
+										  e_msg = "Спасибо за обращение. <br /><br /> Наш специалист в ближайшее время свяжется с вами.";
+										  $('#emsg').html(e_msg).fadeIn("slow");
+										}
+											$('#errmsg').html(e_msg).fadeIn("slow");
+										} else {
+											$('#emsg').text("Ajax error: no data received.").fadeIn("slow");
+										}
+									}    
+</script>
+<script type="text/javascript">
+var senddata = { 
+									url: '/call/',
+									dataType:  'json', 
+									success:   processJsondata,
+									//beforeSubmit: beforeForm
+									}; 
+								$('#call_form').ajaxForm(senddata);
+								
+function processJsondata(data) {
+									//$('#forgif').hide();
+									//$('.mono').removeAttr('disabled');
+									if (data) {
+										e_msg = "";
+											if (!eval(data.valid)) {
+												errors = eval(data.errs);
+												$.each(errors,function(fieldname,errmsg)
+												{
+													if (fieldname == "__all__")
+    											{
+    											  e_msg+=errmsg;
+                            $('#errmsg').html(e_msg).fadeIn("slow"); 
+    											}
+    											else
+    											{
+    											  id = "[name='"+fieldname+"']";
+    													  $(id).parent().find(".error").html( errmsg ).fadeIn();
+    											}
+												});
+											}
+										else if (eval(data.valid)){
+										  $('.wrapFormContent').remove();
+										  e_msg = "Спасибо за обращение. <br /><br /> Наш специалист в ближайшее время свяжется с вами.";
+										  $('#emsg').html(e_msg).fadeIn("slow");
+										}
+											$('#errmsg').html(e_msg).fadeIn("slow");
+										} else {
+											$('#emsg').text("Ajax error: no data received.").fadeIn("slow");
+										}
+									}    								
+</script>
+<div class="overlay" id="overlay" style="display:none;"></div>
+<div id="send_order">
+							<a href="#" class="box-clos" style="color:red;"></a>
+							<p class="titleMedium">Форма заявки</p>
+							<div class="wrapFormContent">
+								<form action="" id="send_order_form" enctype="multipart/form-data" method="post">
+                {% csrf_token %}
+									<div class="bFormContent">
+										<div class="formLine">
+											<div class="wrapLab"><label for="l_name">ФИО</label></div>
+											<input id="l_name" class="fTxt" type="text" name="name" />
+											<div  class="error" style="color:red;margin-bottom:5px;"></div>
+										</div>
+										<div class="formLine">
+											<div class="wrapLab"><label for="l_company">Компания</label></div>
+											<input id="l_company" class="fTxt" type="text" name="company" />
+											<div  class="error" style="color:red;margin-bottom:5px;"></div>
+										</div>
+										<div class="formLine">
+											<div class="wrapLab"><label for="l_country">Страна</label></div>
+											<input id="l_country" class="fTxt" type="text" name="state" />
+											<div  class="error" style="color:red;margin-bottom:5px;"></div>
+										</div>
+										<div class="formLine">
+											<div class="wrapLab"><label for="l_city">Город</label></div>
+											<input id="l_city" class="fTxt" type="text" name="city" />
+											<div  class="error" style="color:red;margin-bottom:5px;"></div>
+										</div>
+										<div class="formLine">
+											<div class="wrapLab"><label for="l_email">e-mail</label></div>
+											<input id="l_email" class="fTxt" type="text" name="email" />
+											<div  class="error" style="color:red;margin-bottom:5px;"></div>
+										</div>
+										<div class="formLine">
+											<div class="wrapLab"><label for="l_phone">Телефон</label></div>
+											<input id="l_phone" class="fTxt" type="text" name="phone" />
+											<div  class="error" style="color:red;margin-bottom:5px;"></div>
+										</div>
+										<div class="formLine">
+											<div class="bTextarea">
+												<div class="wrapLab"><label for="l_description">Введите описание заказа </label></div>
+												<textarea id="l_description" class="fTxt" name="message"></textarea>
+												<div  class="error" style="color:red;margin-bottom:5px;"></div>
+											</div>											
+										</div>
+										<div class="formLine">
+											<div class="bAddFile">
+												<div class="addFileContainer">
+													<input type="file"  name="file1" />
+													<div class="btBlue"><span>Обзор</span></div>
+													<input class="fTxt" type="text" />
+                          <div  class="error" style="color:red;margin-bottom:5px;"></div>
+												</div>
+												<p>Вы можете прикрепить файл до 10 mb</p>
+											</div>
+										</div>
+										<div class="formLine">
+											<!--div class="bCaptcha">
+												<div class="wrapLab"><label for="l_captcha">Введите символы с картинки*</label></div>
+												<div class="captchaRight">
+													<div class="captchaImg"><img src="{{MEDIA_URL}}pict/captcha_01.jpg" alt="" /></div>
+													<input id="l_captcha" class="fTxt" type="text" name="captcha"/>
+													        {%if form.captcha.errors%}   
+															<div class='error'>{{ form.captcha.errors.as_text }}</div>
+															{%endif%}    
+												</div>
+											</div-->
+									<div class="formContentBottom">
+										<div class="btBlue"><span>Отправить</span><input type="submit" class="mono" value="" /></div>
+									</div>
+									<div id="errmsg"></div>
+								</form>
+								
+							</div>
+						</div><!-- form block end -->
+						</div>	
+						<div id="emsg" style="color:#000; padding:10px;"></div>
+</div>
+<div id="call_on_me">
+<div class="bForm"><!-- form block  -->
+							<a href="#" class="box-clos" style="color:red;"></a>
+							<p class="titleMedium">Перезвоните мне</p>
+							<div class="wrapFormContent">
+								<form action="" id="call_form" method="post">{% csrf_token %}
+									<div class="bFormContent">
+										<div class="formLine">
+											<div class="wrapLab"><label for="l_phone">Телефон</label></div>
+											<input id="l_phone" class="fTxt" type="text" name="phone1"/>
+											<p class="formLineHintText">В формате: +7 *** *** ** **</p>
+											<div  class="error" style="color:red;margin-bottom:5px;"></div>
+										</div>
+										<div class="formLine">
+											<div class="wrapLab"><label for="l_introduce">Представтесь</label></div>
+											<input id="l_introduce" class="fTxt" type="text" name="name1" />
+											<div  class="error" style="color:red;margin-bottom:5px;"></div>
+										</div>
+										<div class="formLine">
+											<div class="wrapLab"><label for="l_country">Страна</label></div>
+											<input id="l_country" class="fTxt" type="text" name="state1"/>
+											<div  class="error" style="color:red;margin-bottom:5px;"></div>
+										</div>
+										<div class="formLine">
+											<div class="wrapLab"><label for="l_city">Город</label></div>
+											<input id="l_city" class="fTxt" type="text" name="city1"/>
+											<div  class="error" style="color:red;margin-bottom:5px;"></div>
+										</div>								
+										<!--div class="formLine">
+											<div class="bCaptcha">
+												<div class="wrapLab"><label for="l_captcha">Введите символы с картинки*</label></div>
+												<div class="captchaRight">
+													<div class="captchaImg"><img src="{{MEDIA_URL}}pict/captcha_01.jpg" class="captcha"alt="" /></div>
+													<input id="l_captcha" class="fTxt" type="text" name="captcha"/>
+													        {%if form.captcha.errors%}   
+															<div class='error'>{{ form.captcha.errors.as_text }}</div>
+															{%endif%}  													
+												</div>
+											</div>
+										</div-->
+									</div>
+									<div class="formContentBottom">
+										<div class="btBlue"><span>Отправить</span><input type="submit" value="" /></div>
+									</div>
+								</form>
+							</div>
+							<div id="errmsg" style="color:#000; padding:10px;"></div>
+</div><!-- form block end -->
+</div>
+
+<section class="bResized"><!-- block wrap with a minimum width  -->
+	<section id="wrapper"><!-- #wrapper block  -->	
+		<header id="header"><!-- #header block-->
+			
+			<section class="headerTop"><!-- header top content block -->
+				<div class="bFixed"><!-- fixing the width block -->			
+					<div class="bTopMenu">
+						<em class="ico"></em>
+						<ul>
+							<li><a href="#"></a></li>
+							<li><a href="#"></a></li>
+							<li><a href="#"></a></li>
+						</ul>
+					</div>	
+					<div class="bTopSoc">
+						<ul>
+							<li class="sepor"></li>
+							<li class="fb"><a href="http://{{settings.facebook}}" target="_blank"></a></li>							
+							<li class="sepor"></li>
+							<li class="tw"><a href="http://{{settings.twitter}}" target="_blank"></a></li>							
+							<li class="sepor"></li>
+						</ul>
+					</div>
+					
+					<div class="bTopSearch">
+						<form action="/search/" method="get" >
+							<div class="wrapLab"><label for="l_search"><a href="/map/" id="site_map" title="карта сайта" >карта сайта</a></label></div>
+							<div class="wrapSearchElement">
+							
+								<input id="l_search" type="text" name="q"  />
+								<input type="submit" value="" />
+							</div>
+						</form>
+					</div>
+					
+				</div><!-- fixing the width block end-->				
+			</section><!-- header top content block -->
+			
+			<section class="headerMiddle"><!-- header middle content block -->
+				<div class="bFixed"><!-- fixing the width block -->			
+					<a href="/" class="logo">
+						<img src="{{MEDIA_URL}}{{settings.logo}}" class="" alt="" />
+						<span>{{settings.logo_text}}</span>
+					</a>
+					<div class="bMode">
+						<em class="ico"></em>
+						<p><strong>Время работы</strong>{{settings.operation_time}}</p>{{settings.work_day}}
+					</div>
+					<div class="bContacts">
+						<p><strong>Звоните</strong>—<span>{{settings.phone}}</span></p>
+						<ul>
+							<li class="skype"><em class="ico"></em><a href="skype:{{settings.skype}}?call">skype: <strong>{{settings.skype}}</strong></a></li>
+							<li class="email"><em class="ico"></em><a href="mailto:{{settings.email}}">{{settings.email}}</a></li>
+						</ul>
+					</div>
+					<div class="bSendRequest">
+					
+						<a href="#" class="btBlueImg send_order"><span>Отправить заявку</span></a>
+						<a href="#" class="btWhite call_me">Перезвоните мне</a>
+					</div>
+				</div><!-- fixing the width block end-->				
+			</section><!-- header middle content block -->
+					
+			<section class="headerBottom"><!-- header bottom content block -->
+				<div class="bFixed"><!-- fixing the width block -->			
+					<div class="mMenu"><!-- main menu  -->
+
+							{% show_menu "TopMenu" "top_menu" %}
+							
+
+					</div><!-- main menu end -->
+				</div><!-- fixing the width block end-->				
+			</section><!-- header bottom content block -->
+			
+		</header><!-- #header block end-->
+
+<!-- ######################################################################################## -->
+
+{% block content %}{% endblock %}
+
+<!-- ######################################################################################## -->
+
+	<footer id="footer"><!-- #footer block -->
+		<div class="bFooter"><!-- footer content block -->		
+			<div class="footerLine"></div>
+			<div class="bFooterText">
+				<p>{{settings.content}}</p>
+			</div>
+			<div class="bFooterMenu">
+			{% show_menu "TopMenu" "bottom_menu" %}
+			</div>
+			<div class="bFooterInfo">
+				<div class="bServicesInfo">
+					
+					<img src="{{MEDIA_URL}}{{b.image}}" alt="{{b.title}}" />
+					<p class="titleLarge"><a href="{{b.url}}">{{b.title}}</a></p>{{b.desc|safe}}
+					
+				</div>
+				<div class="bCompanyInfo">
+					{{settings.footer_copyright|safe}}
+				</div>
+				<div class="bCompanyContacts">
+					<p>Контакты</p>{{settings.footer_contact|safe}}
+					<div>
+						<a href="#" class="btBlueSmall">On-line специалист</a>
+						<a href="#" class="dotted">Показать на карте</a>
+					</div>
+				</div>
+			</div>			
+		</div><!-- footer content block end-->
+	</footer><!-- #footer block end-->
+	
+</section><!-- block wrap with a minimum width end -->
+
+</body>
+</html>

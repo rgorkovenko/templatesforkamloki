@@ -1,0 +1,12 @@
+Заказ №{{zakaz.id}} от {{zakaz.pub_date}}
+
+
+Доставка: {{ zakaz.message }}
+{% if zakaz.fil %}Файл: http://kamloki.ru{{ zakaz.fil.url }}{% endif %}
+
+
+{% for item in cart %}
+Товар {{ item.product.title }}: количество {{ item.quantity }}шт. x цена {{item.unit_price}}руб. =  стоимость {{ item.total_price }}руб.
+{% endfor %}
+  
+Итого: {{ cart.summ }} руб.

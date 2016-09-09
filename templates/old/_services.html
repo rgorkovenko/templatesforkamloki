@@ -1,0 +1,174 @@
+{%  extends "base.html" %}
+{% load tree_menu_tags %}
+{% block title %}{{ services.title_seo|default:services.title }}{% endblock %}
+{% block metakey %}{{ services.metakey }}{% endblock %}
+{% block metades %}{{ services.metades }}{% endblock %}
+
+{% block content %}
+<div class="services">
+					<div class="services_nav">
+					<div id="service_nav_wrap">
+						<ul>
+							{%for cat in categorys%}
+								<li  class="{%if cat.get_childrens%}gradient_2  service_subnav{%else%}gradient_2{%endif%}"><a href="{% url services cat.slug_title%}">{{cat.title}}</a>
+								{%if cat.get_childrens%}              
+									<ul class="services_subnav">
+									{%for ca in cat.get_childrens%}
+									<div class="relative">
+										<li class="{%if ca.get_childrens%}services_1_subnav{%endif%}"><a href="{% url services ca.slug_title%}">{{ca.title}}</a></li>
+											{%if ca.get_childrens%}
+										<div class="services_subnav_1"> 
+											<ul class="">
+											<img src="{{MEDIA_URL}}img/services_subnav_arrow.png" alt="" />
+											{%for c in ca.get_childrens%}
+												
+												<li><a href="{% url services c.slug_title%}">{{c.title}}</a></li>
+											
+											{%endfor%}
+											</ul>
+										</div>	
+											{%endif%}
+										</div>
+									{%endfor%}
+									</ul>	              
+								{%endif%}
+							</li>	
+							{%endfor%}
+						</ul>	
+						<div class="clear"></div>
+					</div>
+						{% include "form.html" %}  
+							<!--<script type="text/javascript">
+						$('.sendsubmitt').live('click',function(){
+							   $(".bg2").hide("fast");
+							   $('.forma').hide();
+
+							});     
+							   var senddata = { 
+									url: '/services/',
+									dataType:  'json', 
+									success:   processJsondata,
+									beforeSubmit: beforeForm
+									}; 
+								$('#services_contact').ajaxForm(senddata);
+								
+								function beforeForm() {
+									//$('#ajaxload').css('top',$(window).scrollTop()+$(window).height()/2-16);
+									$('#forgif').show();
+								    $('.error').fadeOut();
+									//$('#captha_err').fadeOut(); 
+									$('#emsg').fadeOut('slow');  
+									$('.mono').attr("disabled","disabled");
+									
+									return true;
+								}
+								
+								function processJsondata(data) {
+									$('#forgif').hide();
+									$('.mono').removeAttr('disabled');
+									if (data) {
+										e_msg = "";
+											if (!eval(data.valid)) {
+												errors = eval(data.errs);
+												$.each(errors,function(fieldname,errmsg)
+												{
+													if (fieldname == "__all__")
+											{
+											  e_msg+=errmsg; 
+											}
+											else
+											{
+											  id = "input[name='"+fieldname+"']";
+													  $("#services_contact").find(".error").html( errmsg ).fadeIn();
+											}
+												});
+											}
+										else if (eval(data.valid)){
+										  $('#services_contact').remove();
+										  e_msg = "Спасибо вам за обращение ! <br /><br /> Мы ответим на ваше письмо в удобное для нас время -)";
+										  $('#emsg').html(e_msg).fadeIn("slow");
+										}
+											$('#errmsg').html(e_msg).fadeIn("slow");
+										} else {
+											$('#emsg').text("Ajax error: no data received.").fadeIn("slow");
+										}
+									}    
+</script>	<h4 class="round_3 gradient">Обратная связ</h4>
+							<form name="contact" id="services_contact" class="round gradient" action="." method="post"> {% csrf_token %}
+												<p>
+															{{form.name}}
+															<div  class="error" style="color:red;margin-bottom:5px;"></div>
+												</p>
+												<p>
+															{{form.phone}}
+															<div  class="error" style="color:red;margin-bottom:5px;"></div>
+												</p>
+												<p>
+															{{form.email}}
+															<div  class="error" style="color:red;margin-bottom:5px;"></div>
+												</p>
+												<p id="services_file_img" class="round">
+															{{form.file1}}
+															<div  class="error" style="color:red;margin-bottom:5px;"></div>
+												</p>
+												<p>
+															{{form.message}}
+															<div  class="error" style="color:red;margin-bottom:5px;"></div>
+												</p>
+															<input type="submit" value="" id="services_submit" class="sendsubmit round"/>
+										<div id="errmsg"></div>
+											<div id="forgif" style="display: none;">
+												<div id="ajaxload"><img src="{{MEDIA_URL}}img/ajax_load.gif" alt="" /></div>
+											</div>
+							</form>
+
+						<div id="emsg" style="color:#000; padding:10px;"></div>-->
+							<div class="services_recall round">
+										{{recalls.title|safe}}
+											{{recalls.name|safe}}<br />
+												{{recalls.content|safe}}
+													{{recalls.fio|safe}}<br /><br />
+													<p align="right"><em > {{recalls.pub_date}}</em></p>
+										 <img src="{{MEDIA_URL}}img/services_recall_arrow.png" alt="" />
+							 </div>
+							 <a href="{%url recalls_list%}" id="services_recall_more"><img src="{{MEDIA_URL}}img/services_recall_button.png" alt="" /></a>
+					</div>
+					<div class="services_design">
+						<div class="breadcrumbs"><a href="/">Главная</a> &rarr; <a href="{%url service%}">Услуги</a> &rarr; <span>{{services.title}}</span></div>
+						<h3>{{services.name}}</h3>
+									<img src="{{MEDIA_URL}}{{services.image}}">
+									{{services.desc|safe}}
+						<div class="services_design_nav">
+							<div id="tabs">
+								{% show_menu "ServicesTabs" "services_tabs" %}
+								<div class="margin_bottom round_5"></div>
+								
+								<div id="tabs-1" class="design_nav_description round">
+									{{services.detail|safe}}
+									<div class="clear"></div>
+								</div>
+								<div id="tabs-2" class="design_nav_description round">
+									{{services.detail_2|safe}}
+									<div class="clear"></div>
+								</div>
+								
+								<div id="tabs-3" class="design_nav_description round">
+									{{services.detail_3|safe}}
+									<div class="clear"></div>
+								</div>
+								
+								<div id="tabs-4" class="design_nav_description round">
+									{{services.detail_4|safe}}
+									<div class="clear"></div>
+								</div>
+								
+								<div id="tabs-5" class="design_nav_description round">
+									{{services.detail_5|safe}}
+									<div class="clear"></div>
+								</div>								
+							</div>	
+						</div>
+					</div>
+						<div class="clear"></div>
+</div>
+{% endblock %}		

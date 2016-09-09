@@ -1,0 +1,42 @@
+{%  extends "base.html" %}
+{% load thumbnail %}
+{% block title %}{{ news.title_seo|default:news.title }}{% endblock %}
+{% block metakey %}{{ news.metakey }}{% endblock %}
+{% block metades %}{{ news.metades }}{% endblock %}
+
+
+{% block breadcrumbs %}
+        <div class="breadcrunbs">
+            <div class="inn">
+                <a href="/base.html">Главная</a> > <a href="{% url news_list %}">Новости</a> > <span>{{ news.title }}</span>
+            </div>
+        </div>
+{% endblock %} 
+
+
+{% block content %}	
+        <div class="main">
+            <div class="inn">
+                <div class="mar">
+                    <div class="left">
+                      {% include "left_menu.html" %}
+
+                    </div>
+                    <div class="right">
+                        <div class="content">
+                            <h1>{{ news.title }} </h1>
+                            <span>{{ news.pub_date }}</span>
+                            {% thumbnail article.image "190" crop="center" as im %}
+                                <img align="left" border="0" src="{{ im.url }}" width="190px" class="img_left" />
+                            {% endthumbnail %}    
+                            {{ news.content|safe }}
+                         
+                        </div>
+
+                    </div>
+                </div>
+                <div class="clr"></div>
+            </div>
+        </div>
+	
+{% endblock %}

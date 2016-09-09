@@ -1,0 +1,210 @@
+{% load tree_menu_tags %}
+{%load thumbnail%}
+{% load catalog_tags %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html class=" ext-strict" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-gb" dir="ltr" lang="en-gb"><head>
+
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>{% block title %}Главная{% endblock %}</title>
+<meta name="keywords" content="{% block metakey %}{% endblock %}" />
+<meta name="description" content="{% block metades %}{% endblock %}" />
+
+  <link href='http://fonts.googleapis.com/css?family=Play&subset=all' rel='stylesheet' type='text/css'>
+  <!--link rel="stylesheet" href="/media/css/ddsmoothmenu.css" type="text/css"-->
+  <script type="text/javascript" src="/media/js/mootools.js"></script>
+  <script type="text/javascript" src="/media/js/caption.js"></script>
+  
+  <link href="/media/css/fetchscript.css" type="text/css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/media/css/jquery.lightbox-0.5.css" media="screen" />
+	<link href="/media/css/css_002.css" rel="stylesheet" type="text/css">
+	<link href="/media/css/css_003.css" rel="stylesheet" type="text/css">
+	<link href="/media/css/css.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="/media/css/constant.css" type="text/css">
+	<link rel="stylesheet" href="/media/css/template.css" type="text/css">
+	<link rel="stylesheet" href="/media/css/virtuemart.css" type="text/css">
+	
+	<script type="text/javascript" src="/media/js/jquery-1.js"></script>
+	<script type="text/javascript" src="/media/js/jqtransform.js"></script>
+	<script type="text/javascript" src="/media/js/jquery.js"></script>
+	<script type="text/javascript" src="/media/js/imagepreloader.js"></script>
+  <script type="text/javascript" src="/media/js/jquery.lightbox-0.5.min.js"></script>
+	<script type="text/javascript">
+	var $j=jQuery.noConflict();
+		 $j(document).ready(function() {			
+		$j(function(){
+			 $j('#select-form').jqTransform({imgPath:'/media/images/'});
+		});
+	});
+	$j(document).ready(function(){
+	    //accordion begin
+	    $j("#accordion dt").eq(0).addClass("active");
+	    $j("#accordion dd").eq(0).show();
+	 
+	    $j("#accordion dt").click(function(){
+	        $j(this).next("#accordion dd").slideToggle("slow")
+	        .siblings("#accordion dd:visible").slideUp("slow");
+	        $j(this).toggleClass("active");
+	        $j(this).siblings("#accordion dt").removeClass("active");
+	        return false;
+	    });
+	});
+	$j(document).ready(function(){
+			$j(function() {
+				var offset = $j("#cart").offset();
+				var topPadding = 135;
+				$j(window).scroll(function() {
+					if ($j(window).scrollTop() > offset.top) {
+						$j("#cart").stop().animate({marginTop: $j(window).scrollTop() - offset.top + topPadding});
+					}
+					else {$j("#cart").stop().animate({marginTop: 0});};});
+	 });});				
+	 $j(window).load(function() {
+    $j('#slider').nivoSlider({
+        effect:'random', //Specify sets like: 'fold,fade,sliceDown'
+        slices:17,
+        animSpeed:600,
+        pauseTime:5000,
+        startSlide:0, //Set starting Slide (0 index)
+        directionNav:false, //Next & Prev
+        directionNavHide:true, //Only show on hover
+        controlNav:true, //1,2,3...
+        controlNavThumbs:false, //Use thumbnails for Control Nav
+        controlNavThumbsFromRel:false, //Use image rel for thumbs
+        controlNavThumbsSearch: '.jpg', //Replace this with...
+        controlNavThumbsReplace: '_thumb.jpg', //...this in thumb Image src
+        keyboardNav:true, //Use left & right arrows
+        pauseOnHover:true, //Stop animation while hovering
+        manualAdvance:false, //Force manual transitions
+        captionOpacity:0.8, //Universal caption opacity
+        beforeChange: function(){},
+        afterChange: function(){},
+        slideshowEnd: function(){} //Triggers after all slides have been shown
+    });
+});
+		preloadImages([
+			'/media/images/search-button-active.png',
+			'/media/images/top-menu-a.active.gif',
+			'/media/images/button1-active.png',
+			'/media/images/login-button-active.png',
+			'/media/images/button3-active.png',
+			'/media/images/button2.png',
+			'/media/images/button2-active.png',
+			'/media/images/cart-button-active.png',
+			'/media/images/arrowUp-active.png',
+			'/media/images/arrowDown-active.png'
+			]);
+	</script>
+	<!--[if lt IE 7]>
+		<div style=' clear: both; text-align:center; position: relative;'>
+			<a href="http://www.microsoft.com/windows/internet-explorer/default.aspx?ocid=ie6_countdown_bannercode"><img src="http://www.theie6countdown.com/images/upgrade.jpg" border="0"  alt="" /></a>
+		</div>
+	<![endif]-->
+	<style>
+	 #footer ul , dl#accordion dt , .featuredBorder , .related .extra-releted , .moduletable-categories ul.level1 li:first-child a , .moduletable-categories ul.level2 , 
+	 .moduletable-categories ul.level3 , .moduletable_LoginForm , .module_multi h3 , .module_multi .featuredIndent , .module_multi .product_name , .addtocart_button , .module_multi2 .featuredIndent , .module_multi2 h3 , .module_multi2 .product_name,  .module h3 , .module_text h3 , .module_menu h3 , .module .boxIndent , .module_text .boxIndent , .module_menu .boxIndent , .title , .product_sect , .contentheading , .componentheading , dl#accordion , #vmMainPage h3 , .search .inputbox , .moduletable-nav ul.menu li a , .module_multi  .border-product , .Product-border{
+		 	behavior:url(/media/PIE/PIE.php)
+		}
+	</style>
+</head>
+<body id="body" class="first  ext-gecko ext-gecko3">
+	<!-- header -->	
+	<div id="header">
+		<div class="main">
+			<div id="topmenu">
+						<div class="moduletable-nav">
+					{% show_menu "TopMenu" "top_menu" %}		</div>
+	
+			</div>
+			<div id="logo">
+				<a href="/"><img src="{{MEDIA_URL}}{{settings.image}}"></a>
+			</div>
+			<!--div class="currency">
+						<div class="moduletable">
+					<h3>Currencies:</h3>
+<form class="jqtransformdone" id="select-form" action="/virtuemart_35285/index.php" method="post">
+	<input name="option" value="com_content" type="hidden">
+<input name="view" value="frontpage" type="hidden">
+<input name="Itemid" value="1" type="hidden">
+<input name="limit" value="0" type="hidden">
+<div style="z-index: 10; width: 110px;" class="jqTransformSelectWrapper"><div><span style="width: 0px;">US Dollar</span><a href="#" class="jqTransformSelectOpen"></a></div><ul style="width: 108px; display: none; visibility: visible;"><li><a href="#" index="0">Euro</a></li><li><a class="selected" href="#" index="1">US Dollar</a></li></ul><select style="" class="inputbox jqTransformHidden" name="product_currency" size="1">
+<option value="EUR">Euro</option>
+<option value="USD" selected="selected">US Dollar</option>
+</select></div>
+	<input name="do_coupon" value="yes" type="hidden">
+    <button id="" name="submit" type="submit" class="button jqTransformButton"><span><span>Change</span></span></button>
+</form>
+		</div>
+		</div-->
+    		
+			<div style="margin-top: 0px;" id="cart">
+						<div class="moduletable">
+					<h3>Корзина</h3>
+					<div class="vmCartModule">
+				<a href="/cart/list/">{{cart.coutn}}</a>			
+</div>		</div>
+	
+			</div>
+					<div class="moduletable-categories">
+					<script type="text/javascript" src="/media/js/ddsmoothmenu.js"></script>
+<div class="ddsmoothmenu" id="smoothmenu1"><div id="relative_div" style="position:relative;z-index:0"></div>
+<ul class="level1">
+
+{%for n in categorys%}
+
+<li {%if slug_title = n.slug_title%}id="current"{%endif%} class="level1{%if n.getchildrens%} parent{%endif%}">
+<a class="level1{%if n.getchildrens%} parent{%endif%}{%if slug_title = n.slug_title%} current active{%endif%}" href="{%url category_inside n.slug_title%}" title="{{n.title}}">
+<span>{{n.title}}</span><img src="/media/images/down.gif" class="downarrowclass" style="border: 0pt none;"></a>
+{%if n.getchildrens%}
+<ul style="display: none; top: 44px; visibility: visible;" class="level2">
+{%for m in n.getchildrens%}
+<li  {%if slug_title = m.slug_title%}id="current"{%endif%}  class="level2{%if n.getchildrens%} parent{%endif%}">
+<a class="level2{%if n.getchildrens%} parent{%endif%}{%if slug_title = m.slug_title%} current active{%endif%}" href="{% url category_inside m.slug_title %}" title="{{m.title}}"><span>{{m.title}}</span><img src="/media/images/right.gif" class="rightarrowclass" style="border: 0pt none;"></a>
+
+{%if m.getchildrens%}
+<ul class="level3">
+{%for l in m.getchildrens%}
+<li  {%if slug_title = l.slug_title%}id="current"{%endif%}  class="level3" {%if slug_title = m.slug_title%}id="current"{%endif%}><a class="level3{%if slug_title = l.slug_title%} current active{%endif%}" href="{%url category_inside l.slug_title%}" title="{{l.title}}"><span>{{l.title}}</span></a></li>
+{%endfor%}
+</ul>
+{%endif%}
+{%endfor%}
+</ul>
+{%endif%}
+
+{%endfor%}
+</ul></div>		</div>
+	
+			<div id="search">
+						<div class="moduletable">
+						{{settings.tel}}
+					<!--form method="get">
+	<div class="search">
+		<input name="searchword" id="mod_search_searchword" maxlength="140" alt="Search" class="inputbox" size="140" value="Enter search keywords here" onblur="if(this.value=='') this.value='Enter search keywords here';" onfocus="if(this.value=='Enter search keywords here') this.value='';" type="text"><input value="Search" class="button" onclick="this.form.searchword.focus();" type="submit">	</div>
+	<input name="task" value="search" type="hidden">
+	<input name="option" value="com_search" type="hidden">
+	<input name="Itemid" value="1" type="hidden">
+</form-->		</div>
+	
+			</div>
+		</div>	
+	</div>
+	<!-- END header -->
+  {%block content%}
+  
+
+
+   {%endblock%}
+       
+		<div id="footer">
+			<div class="space">
+				<div class="wrapper">
+					<div class="footerText">
+						{% show_menu "TopMenu" "top_menu" %}<div>{{settings.title}}</div><!--{%FOOTER_LINK} -->
+					</div>
+				</div>
+			</div>
+		</div>	
+	</div>
+
+ {{settings.metrik|safe}}
+</body></html>

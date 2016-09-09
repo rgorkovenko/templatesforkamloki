@@ -1,0 +1,115 @@
+{% load tree_menu_tags %}
+
+
+{% ifequal menu_type "top_menu" %}
+        <div class="menu">
+            <div class="inn">
+                <ul>
+                    {% for menu_item in menu.root_item.children %}
+                    <li><a href="{{ menu_item.url }}">{{ menu_item.caption }}</a></li>
+                    <li></li>
+                    {% endfor %}
+                </ul>
+                <span class="jus"></span>
+            </div>
+        </div>
+{% endifequal %}  
+
+
+{% ifequal menu_type "top_menu1" %}  
+						<ul class="mMenuItems">
+						  {% for menu_item in menu.root_item.children %}
+						      
+                  {% if request.path == "/" %}<li class="active" style="display:none" item-id="0"></li>{%endif%}
+                  
+                  <li {%if forloop.first%}id="first"{%endif%} item-id="{{ forloop.counter }}" class="{%if request.path|startswith:menu_item.url%}{%if request.path = '/' and menu_item.url = '/'%}active{%else%}{%if not menu_item.url = '/'%}active{%endif%}{%endif%}{%endif%}">
+                 
+                  {%if request.path != menu_item.url %}<a href="{{ menu_item.url }}">{%endif%}
+                      <span>{{ menu_item.caption }}</span><em class="corner"></em>
+                  {%if request.path != menu_item.url %}</a>{%endif%}
+                  </li>
+              {% endfor %}
+						</ul>
+          <div style="min-height:60px">
+ 					<div class="mMenuSubItems" style="display: block;" >           
+              <ul item-id="0" {% if request.path == "/" %}class="active"{% endif %}>
+								{%for cat in categ%}
+									<li><a href="{% url cat cat.slug_title %}">{{cat.title}}{%if request.path|startswith:cat.slug_title%}<em class="corner2"></em>{%endif%}</a></li>
+								{%endfor%}
+							</ul>
+              <ul item-id="2" {% if request.path|startswith:"/katalog/"%}class="active"{% endif %}>
+								{%for cat in categ%}
+									<li><a href="{% url cat cat.slug_title %}">{{cat.title}}{%if request.path|startswith:cat.slug_title or request.path|for_menu:cat or request.path|for_menu_item:cat%}<em class="corner2"></em>{%endif%}</a></li>
+								{%endfor%}
+							</ul> 
+              {%if categor%}             
+							<ul item-id="5"  {%if request.path|startswith:"/news/" %}class="active"{% endif %}>
+								{%for cat in categor%}
+									<li><a href="{% url category_inside cat.slug_title %}">{{cat.title}}{%if request.path|startswith:cat.slug_title%}<em class="corner2"></em>{%endif%}</a></li>
+								{%endfor%}
+							</ul>
+							{%endif%}
+             {% for menu_item in menu.root_item.children %}
+              {% if menu_item.has_children %}
+                  <ul item-id="{{ forloop.counter }}"  {%if request.path|startswith:menu_item.url %}class="active"{% endif %}>
+    								  {% for child in menu_item.children %}
+                          <li><a href='{{ child.url }}'>{{ child.caption }}{%if request.path|startswith:child.url%}<em class="corner2"></em>{%endif%}</a></li>
+										{% endfor %}
+    							</ul>
+              {% endif %}
+              {% endfor %}
+					    <div class="mMenuShadows"></div>
+				</div>
+			</div>	
+{% endifequal %}					
+<!-- ######################################################################################## -->
+
+{% ifequal menu_type "bottom_menu" %}  
+	<ul class="bottommenu">
+		{% for menu_item in menu.root_item.children %}
+			<li><a href="{{ menu_item.url }}">{{ menu_item.caption }}</a></li>		
+		{% endfor %}
+	</ul>
+{% endifequal %}
+
+<!-- ######################################################################################## -->
+
+{% ifequal menu_type "left_menu" %}  
+<ul>
+	{% for menu_item in menu.root_item.children %}
+	 <li item-id="{{ forloop.counter }}"> <a href="{{ menu_item.url }}">{{ menu_item.caption }}</a></li>
+
+		{% if menu_item.has_children %}
+			  {%if  menu_item.caption == "Каталог" %}
+		<div class="vMenuScroll">
+			<div>
+				<ul>
+				{%for cat in categ%}
+					<li><a href="{% url cat cat.slug_title %}">{{cat.title}}</a></li>
+				 {% endfor %}
+				</ul>
+			</div>
+		</div>
+	{% endif %}
+	
+	<div class="vMenuScroll">
+			<div>
+				<ul>
+					{% for child in menu_item.children %}
+						 <li><a href='{{ child.url }}'>{{ child.caption }}</a></li>
+							 {% if child_item.has_children %}
+
+								{% for child_child in child.children %}
+									<li><a href='{{ child_child.url }}'>{{ child_child.caption }}</a></li>
+								{% endfor %}
+			
+								{% endif %}    
+					{% endfor %}	 
+				</ul>
+			</div>
+	</div>
+	
+	{% endif %}
+	{% endfor %}
+</ul>	
+{% endifequal %}

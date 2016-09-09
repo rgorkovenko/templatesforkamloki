@@ -1,0 +1,151 @@
+{%  extends "base_1.html" %}
+
+{% load thumbnail %}
+{% load tree_menu_tags %}
+
+{% block title %}
+	{% if cat.title_seo %}
+		{{ cat.title_seo }}
+	{% else %}
+		Купить {{ cat.title|lower }}, цены в Екатеринбурге
+	{% endif %}
+{% endblock %}
+{% block metakey %}{{ cat.metakey }}{% endblock %}
+{% block metades %}
+	{% if cat.metades %}
+		{{ cat.metades }}
+	{% else %}
+		В компании Техника плюс вы можете купить  {{ cat.title|lower }} по выгодной цене в Екатеринбурге
+	{% endif %}
+{% endblock %}
+<!--waka-->
+
+{% block breadcrumbs %}        
+        <div class="breadcrunbs" itemscope itemtype="http://schema.org/BreadcrumbList">
+            <div class="inn">
+				<div class="brleft" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+					<a itemprop="item" href="/" ><span itemprop="name">Главная</span><meta itemprop="position" content="1" /></a>
+				</div> >
+				<div class="brleft" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="{% url catalog %}"><span itemprop="name">Каталог продукции</span><meta itemprop="position" content="2" /></a></div> >
+                {% for c in cat.get_ancestors %}
+					<div class="brleft" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+						<a itemprop="item" href="{% url cat c.slug_title %}"><span itemprop="name">{{ c.title }}</span>	<meta itemprop="position" content="{{ forloop.counter|add:"2" }}" /></a>
+					
+					</div> >               
+                {% endfor %}
+                <span>{{ cat.title }}</span>
+            </div>
+        </div>
+{% endblock %}
+
+
+
+
+{% block content %}
+        <div class="main">
+            <div class="inn">
+                <div class="mar">
+                    <div class="left">						
+                    	{% include "left_menu.html" %}
+
+                    </div>
+                    <div class="right">
+                        <div class="content">
+                            <h1>{{cat.title}} </h1>
+
+                            <div class="category_list">
+                                <div class="category_item">
+                                     <!--59--><img class="category_img" 
+                                    {% thumbnail cat.image "165x165" crop="center" as im %}
+                                    	src="{{ im.url }}"
+                                    {% endthumbnail %}  	
+                                    width="165px" alt="{{cat.title|safe|cut:'"'}}" title="{{cat.title|safe|cut:'"'}}">
+                                    {{ cat.content|safe|cut:'"' }}
+                                </div>
+
+                            {% if cat.getchildrens.count %}
+                               {% for c in cat.getchildrens %} 
+                                <div class="category_item">
+                                    <!--70#{{c}}--><img class="category_img_item" 
+                                    {% thumbnail c.image "95x95" crop="center" as im %}
+                                    	src="{{ im.url }}"
+                                    {% endthumbnail %}  	
+                                     width="95px" alt="{{c.title|safe|cut:'"'}}" title="{{c.title|safe|cut:'"'}}">
+                                    <h3><a href="{%url cat c.slug_title %}">{{ c.title }}</a></h3>
+                                    {{ c.content|safe|cut:'"' }}
+                                </div>
+                                {% endfor %}
+
+                            {% else %}
+	                            <div class="description">
+	                                <ul class="tab">
+	                                    <li id="t_1">Описание</li>
+	                                    <li id="t_2">Цены</li>
+	                                    {% if cat.price_list %}<li id="t_3">Скачать прайс-лист</li>{% endif %}
+	                                </ul>
+
+	                                <div class="tabs">
+	                                    <div class="tab_1">
+	                                    	{{ cat.cont_full|safe|cut:'"' }}
+	                                    </div>
+	                                    <div class="tab_2">
+	                                        {{ cat.cont_price|safe|cut:'"' }}
+	                                        <table class="prod_list">
+	                                            <tr>
+	                                                <th>Наименование товара</th>
+	                                                <th>Цена, розн</th>
+	                                                <th>Цена, опт</th>
+	                                                <th>Ед.изм.</th>
+	                                                <th width="100">Количество</th>
+	                                                <th>Заказ</th>
+	                                            </tr>
+
+	                                            {% for i in cat.gettovar %}
+	                                            <tr>
+	                                                <td class="name"><a href="{% url item cat.slug_title i.slug_title %}">{{ i.title }} 
+                                                    </a>
+                                                    {% thumbnail i.image "165x165" crop="center" as im %}
+                                                        <!--109--> <img src="{{ im.url }}" alt="{{i.title|safe|cut:'"'}}" title="{{i.title|safe|cut:'"'}}">
+                                                    {% endthumbnail %}
+                                                    </td>
+	                                                <td>{% if i.price == 1 %}по запросу{% else%}{{ i.price }}{% endif %}</td>
+	                                                <td>{% if i.old_price == 1 %}по запросу{% else%}{{ i.old_price }}{% endif %}</td>
+	                                                <td>шт.</td>
+	                                                <form>
+	                                                    <td><span class="plus"></span>
+	                                                        <input type="text" name="quantity" value="1"><span class="minus"></span></td>
+	                                                    <td>
+	                                                        <input type="submit" data-tid="{{ i.pk }}" class="add-to-cart" value="Заказать">
+	                                                    </td>
+	                                                </form>
+	                                            </tr>
+	                                            {% endfor %}
+
+	                                        </table>
+	                                    </div>
+	                                    <div class="tab_3">
+	                                        <p><a href="{{ MEDIA_URL }}{{ cat.price_list }}" target="_blank">Скачать прайс-лист</a></p>
+	                                    </div>
+	                                </div>
+	                            </div>
+
+	                        {% endif %}    
+							
+							<div class="description_full">
+							{% if cat.getchildrens.count %}
+								{{ cat.cont_full|safe|cut:'"' }}
+							{% endif %}
+							
+							</div>
+							
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="clr"></div>
+            </div>
+        </div>
+{% endblock %}

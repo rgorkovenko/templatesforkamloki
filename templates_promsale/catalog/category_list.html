@@ -1,0 +1,33 @@
+{%extends "base.html"%}
+{% load thumbnail %}
+{% load pagination_tags %}
+
+{% block title %}Продукция{% endblock %}
+{% block metakey %}{% endblock %}
+{% block metades %}{% endblock %}
+
+
+{%block slider%}
+   <img src="/media/images/products.png">
+{%endblock%}
+
+{% block content %}
+
+  <div class="pathway"><a href="/">Главная</a> \ Продукция</div>
+  <h1>Продукция</h1>
+  		
+	<div class="content2">				
+   {% for n in categorys %}
+    <div class="category">
+       <div class="catimage"><a href="{% url category_inside n.slug_title %}"><img src="{{MEDIA_URL}}{{n.image}}"></a></div>
+       <a href="{% url category_inside n.slug_title %}">{{ n.title }}{%if n.title2%}<br>{{n.title2}}{%endif%}</a>
+  <br>
+  <div class="anonce">
+  {{ n.anonce }}
+     </div>
+   </div>     
+  {% endfor %} 
+  </div>
+{% endblock %}
+
+
